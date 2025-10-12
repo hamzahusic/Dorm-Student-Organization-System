@@ -8219,6 +8219,226 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
+
+.auth-page-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #1a1a1a;
+    min-height: 100vh;
+}
+
+.auth-page-row {
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+}
+
+.auth-page-image {
+    flex: 1;
+    background: linear-gradient(135deg, #06714a 0%, #08915e 50%, #0aad73 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-page-image::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    top: -200px;
+    left: -200px;
+}
+
+.auth-page-image::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    bottom: -150px;
+    right: -150px;
+}
+
+.auth-page-image-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+}
+
+.auth-page-image-content h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.auth-page-image-content p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.auth-page-form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: #2d2d2d;
+    padding-top: 115px;
+}
+
+.auth-page-form-wrapper {
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-page-form-wrapper h2 {
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.auth-page-subtitle {
+    color: #b0b0b0;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    margin-top: 0;
+}
+
+.auth-page-form-group {
+    margin-bottom: 1rem;
+}
+
+.auth-page-label {
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.auth-page-input {
+    width: 100%;
+    border: 1px solid #404040;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.auth-page-input:focus {
+    border-color: #08915e;
+    box-shadow: 0 0 0 0.2rem rgba(8, 145, 94, 0.1);
+    outline: none;
+}
+
+.auth-page-btn {
+    width: 100%;
+    background: #08915e;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.auth-page-btn:hover {
+    background: #06714a;
+}
+
+.auth-page-form-check {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.auth-page-checkbox {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    accent-color: #08915e;
+}
+
+.auth-page-check-label {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    margin: 0;
+}
+
+.auth-page-link {
+    color: #08915e;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-page-link:hover {
+    color: #06714a;
+    text-decoration: underline;
+}
+
+.auth-page-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+.auth-page-divider::before,
+.auth-page-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #404040;
+}
+
+.auth-page-divider span {
+    padding: 0 1rem;
+}
+
+.auth-page-text-center {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .auth-page-row {
+        flex-direction: column;
+    }
+    
+    .auth-page-image {
+        padding-top: 70px;
+        min-height: 200px;
+        flex: none;
+    }
+    
+    .auth-page-image-content h1 {
+        font-size: 2rem;
+    }
+    
+    .auth-page-image-content p {
+        font-size: 0.95rem;
+    }
+    
+    .auth-page-form {
+        padding: 30px 20px;
+    }
 }

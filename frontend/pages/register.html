@@ -1,3 +1,68 @@
-<div>
-    Register Page
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="#home" class="logo d-flex align-items-center">
+        <i class="bi bi-buildings"></i>
+        <h1 class="sitename">UniDorms</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu" role="navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about"><span>About</span></a></li>
+          <li><a href="#announcements">Announcements</a></li>
+          <li><a href="#login">Login</a></li>
+          <li><a href="#register">Register</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+</header>
+
+<section>
+    <div class="auth-page-container">
+    <div class="auth-page-row">
+        <div class="auth-page-image">
+            <div class="auth-page-image-content">
+                <h1>Join Us</h1>
+                <p>Create an account to get started</p>
+            </div>
+        </div>
+        <div class="auth-page-form">
+            <div class="auth-page-form-wrapper">
+                <h2>Create Account</h2>
+                <p class="auth-page-subtitle">Fill in your details to register</p>
+                
+                <form id="authRegisterForm">
+                    <div class="auth-page-form-group">
+                        <label for="authRegisterName" class="auth-page-label">Full Name</label>
+                        <input type="text" class="auth-page-input" id="authRegisterName" placeholder="John Doe" required>
+                    </div>
+                    <div class="auth-page-form-group">
+                        <label for="authRegisterEmail" class="auth-page-label">Email</label>
+                        <input type="email" class="auth-page-input" id="authRegisterEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="auth-page-form-group">
+                        <label for="authRegisterPassword" class="auth-page-label">Password</label>
+                        <input type="password" class="auth-page-input" id="authRegisterPassword" placeholder="Create password" required>
+                    </div>
+                    <div class="auth-page-form-group">
+                        <label for="authConfirmPassword" class="auth-page-label">Confirm Password</label>
+                        <input type="password" class="auth-page-input" id="authConfirmPassword" placeholder="Confirm password" required>
+                    </div>
+                    <button type="submit" class="auth-page-btn">Create Account</button>
+                    
+                    <div class="auth-page-divider">
+                        <span>Already have an account?</span>
+                    </div>
+                    
+                    <div class="auth-page-text-center">
+                        <a href="#" class="auth-page-link">Sign in instead</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+</section>
