@@ -7,7 +7,8 @@
         <h1 class="sitename">UniDorms</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu" role="navigation">
+      <!-- Desktop Navigation -->
+      <nav id="navmenu" class="navmenu desktop-nav" role="navigation">
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about"><span>About</span></a></li>
@@ -15,8 +16,23 @@
           <li><a href="#login">Login</a></li>
           <li><a href="#register">Register</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
+
+      <!-- Mobile Navigation -->
+      <nav class="navmenu mobile-nav" role="navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#announcements">Announcements</a></li>
+          <li><a href="#login">Login</a></li>
+          <li><a href="#register">Register</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Toggle Button -->
+      <i class="mobile-nav-toggle d-xl-none bi bi-list">
+        <img src="./assets/img/hamburger.png" alt="hamburger icon" width="30px">
+      </i>
 
     </div>
   </header>

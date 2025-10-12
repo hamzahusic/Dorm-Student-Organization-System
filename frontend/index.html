@@ -11,15 +11,16 @@
     <script src="./assets/js/jquery.spapp.min.js"></script>
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/spapp.css">
+    <script src="./assets/js/navmenu.js"></script>
 </head>
 <body>
     <main id="spapp" role="main">
-        <section id="home" data-load="home.html"></section>
-        <section id="about" data-load="about.html"></section>
-        <section id="announcements" data-load="announcements.html"></section>
-        <section id="announcements-details" data-load="announcements-details.html"></section>
-        <section id="login" data-load="login.html"></section>
-        <section id="register" data-load="register.html"></section>
+        <section id="home"></section>
+        <section id="about"></section>
+        <section id="announcements"></section>
+        <section id="announcements-details"></section>
+        <section id="login"></section>
+        <section id="register"></section>
     </main>
 
     <script>
@@ -27,6 +28,54 @@
             defaultView:"#home",
             templateDir:"./pages/"
         })
+
+        app.route({
+        view : "home",
+        load : "home.html",
+        onCreate: function() { 
+            bindMobileNavToggle()
+        },
+        });
+
+        app.route({
+        view : "about",
+        load : "about.html",
+        onCreate: function() { 
+            bindMobileNavToggle()
+         },
+        });
+
+        app.route({
+        view : "announcements",
+        load : "announcements.html",
+        onCreate: function() { 
+            bindMobileNavToggle()
+         },
+        });
+
+        app.route({
+        view : "announcements-details",
+        load : "announcements-details.html",
+        onCreate: function() { 
+            bindMobileNavToggle()
+         },
+        });
+
+        app.route({
+        view : "login",
+        load : "login.html",
+        onCreate: function() { 
+            bindMobileNavToggle()
+         },
+        });
+
+        app.route({
+        view : "register",
+        load : "register.html",
+        onCreate: function() { 
+            bindMobileNavToggle()
+         },
+        });
         
         app.run();
     </script>
