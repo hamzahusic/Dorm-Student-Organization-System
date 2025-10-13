@@ -4,7 +4,7 @@ function bindMobileNavToggle() {
     const mobileNavToggleBtn = document.querySelectorAll('.mobile-nav-toggle');
     
     mobileNavToggleBtn.forEach(function(btn) {
-        
+
         if (boundButtons.includes(btn)) {
             return;
         }
@@ -13,10 +13,6 @@ function bindMobileNavToggle() {
 
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-
-        
-
-            console.log('Mobile nav toggle clicked');
 
             const header = btn.closest('header');
             const mobileNav = header.querySelector('.mobile-nav');
