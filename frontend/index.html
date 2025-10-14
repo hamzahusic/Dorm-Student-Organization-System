@@ -28,6 +28,7 @@
         <section id="admin-rooms"></section>
         <section id="admin-requests"></section>
         <section id="admin-meals"></section>
+        <section id="admin-announcements"></section>
     </main>
 
     <script>
@@ -124,6 +125,15 @@
              },
         });
 
+        app.route({
+            view : "admin-announcements",
+            load : "admin-announcements.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                announcementsAdminDataTableDemo()
+             },
+        });
+
 
         app.run();
     </script>
@@ -137,5 +147,6 @@
     <script src="./assets/js/roomsDataLoad.js"></script>
     <script src="./assets/js/requestDataLoad.js"></script>
     <script src="./assets/js/mealsDataLoad.js"></script>
+    <script src="./assets/js/annoucementsDataLoad.js"></script>
 </body>
 </html>
