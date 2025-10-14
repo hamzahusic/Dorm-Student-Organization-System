@@ -176,7 +176,7 @@ function datatablesSimpleDemo() {
                                 </div>
                                 <div class="mb-3">
                                     <label for="roomNumber${student.id}" class="form-label">Room number</label>
-                                    <input type="number" class="form-control" id="roomNumber${student.id}" placeholder="215" value="${student.roomNumber}">
+                                    <p>${student.roomNumber}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="role${student.id}">Role</label>
