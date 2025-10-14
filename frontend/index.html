@@ -25,6 +25,7 @@
         <section id="login"></section>
         <section id="register"></section>
         <section id="admin-dashboard"></section>
+        <section id="admin-rooms"></section>
     </main>
 
     <script>
@@ -94,6 +95,16 @@
              },
         });
         
+        app.route({
+            view : "admin-rooms",
+            load : "admin-rooms.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                roomsDataTableDemo()
+             },
+        });
+
+
         app.run();
     </script>
     <script src="./assets/js/main.js"></script>
@@ -103,5 +114,6 @@
     <script src="./assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="./assets/js/datatables-simple-demo.js"></script>
+    <script src="./assets/js/roomsDataLoad.js"></script>
 </body>
 </html>
