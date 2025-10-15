@@ -34,6 +34,7 @@
         <section id="student-room"></section>
         <section id="student-settings"></section>
         <section id="student-meals"></section>
+        <section id="student-requests"></section>
     </main>
 
     <script>
@@ -187,6 +188,15 @@
              },
         });
 
+        app.route({
+            view : "student-requests",
+            load : "student-requests.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                studentRequestsInit()
+             },
+        });
+
         app.run();
     </script>
     <script src="./assets/js/main.js"></script>
@@ -205,5 +215,6 @@
     <script src="./assets/js/studentRoomDataLoad.js"></script>
     <script src="./assets/js/studentSettingsDataLoad.js"></script>
     <script src="./assets/js/studentMealsDataLoad.js"></script>
+    <script src="./assets/js/studentRequestsDataLoad.js"></script>
 </body>
 </html>
