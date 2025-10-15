@@ -29,6 +29,7 @@
         <section id="admin-requests"></section>
         <section id="admin-meals"></section>
         <section id="admin-announcements"></section>
+        <section id="admin-settings"></section>
     </main>
 
     <script>
@@ -134,6 +135,15 @@
              },
         });
 
+        app.route({
+            view : "admin-settings",
+            load : "admin-settings.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                loadSettings()
+             },
+        });
+
 
         app.run();
     </script>
@@ -148,5 +158,6 @@
     <script src="./assets/js/requestDataLoad.js"></script>
     <script src="./assets/js/mealsDataLoad.js"></script>
     <script src="./assets/js/annoucementsDataLoad.js"></script>
+    <script src="./assets/js/settings.js"></script>
 </body>
 </html>
