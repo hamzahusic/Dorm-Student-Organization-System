@@ -31,6 +31,8 @@
         <section id="admin-announcements"></section>
         <section id="admin-settings"></section>
         <section id="student-dashboard"></section>
+        <section id="student-room"></section>
+        <section id="student-settings"></section>
     </main>
 
     <script>
@@ -157,6 +159,24 @@
              },
         });
 
+        app.route({
+            view : "student-room",
+            load : "student-room.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                studentRoomInit()
+             },
+        });
+
+        app.route({
+            view : "student-settings",
+            load : "student-settings.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                loadStudentSettings()
+             },
+        });
+
 
         app.run();
     </script>
@@ -173,5 +193,7 @@
     <script src="./assets/js/annoucementsDataLoad.js"></script>
     <script src="./assets/js/settings.js"></script>
     <script src="./assets/js/studentDashboardDataLoad.js"></script>
+    <script src="./assets/js/studentRoomDataLoad.js"></script>
+    <script src="./assets/js/studentSettingsDataLoad.js"></script>
 </body>
 </html>
