@@ -30,6 +30,7 @@
         <section id="admin-meals"></section>
         <section id="admin-announcements"></section>
         <section id="admin-settings"></section>
+        <section id="student-dashboard"></section>
     </main>
 
     <script>
@@ -86,7 +87,7 @@
          },
         });
 
-        // Dashboard Routes
+        // Admin Dashboard Routes
 
          app.route({
             view : "admin-dashboard",
@@ -144,6 +145,18 @@
              },
         });
 
+        // Student Dashboard Routes
+
+        app.route({
+            view : "student-dashboard",
+            load : "student-dashboard.html",
+            onCreate: function() { 
+                sideBarToggleScript()
+                studentDashboardInit()
+                loadStudentMealsChart()
+             },
+        });
+
 
         app.run();
     </script>
@@ -159,5 +172,6 @@
     <script src="./assets/js/mealsDataLoad.js"></script>
     <script src="./assets/js/annoucementsDataLoad.js"></script>
     <script src="./assets/js/settings.js"></script>
+    <script src="./assets/js/studentDashboardDataLoad.js"></script>
 </body>
 </html>
