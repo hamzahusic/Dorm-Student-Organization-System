@@ -11,7 +11,6 @@ const sideBars = []
 
 const sideBarToggleScript = () => {
     // Toggle the side navigation
-
     const sidebarToggle = document.body.querySelectorAll('#sidebarToggle');
 
     if (sidebarToggle.length > 0) {
@@ -20,17 +19,16 @@ const sideBarToggleScript = () => {
             document.body.classList.toggle('sb-sidenav-toggled');
         }
 
-        
         sidebarToggle.forEach((sideBar) => {
             if(sideBars.includes(sideBar)) return;
+
+            sideBars.push(sideBar);
 
             sideBar.addEventListener('click', event => {
                 event.preventDefault();
                 document.body.classList.toggle('sb-sidenav-toggled');
                 localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-                sideBars.push(sideBar);
             });
         })
-
     }
 }
