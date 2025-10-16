@@ -1,0 +1,181 @@
+<section class="dashboard sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="#home">UniDorms</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#student-settings">Settings</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="#student-dashboard">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Student</div>
+                        <a class="nav-link active" href="#student-room">
+                            <div class="sb-nav-link-icon"><i class="fas fa-door-open"></i></div>
+                            Room
+                        </a>
+                        <a class="nav-link" href="#student-meals">
+                            <div class="sb-nav-link-icon"><i class="fas fa-utensils"></i></div>
+                            Meals
+                        </a>
+                        <a class="nav-link" href="#student-requests">
+                            <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
+                            Requests
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Profile</div>
+                        <a class="nav-link" href="#student-settings">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
+                            Settings
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    hamza.husic@university.ba
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">My Room</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="#student-dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Room</li>
+                    </ol>
+
+                    <div class="row">
+                        <!-- Room Details Card -->
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <i class="fas fa-door-open me-1"></i>
+                                    Room Details
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Room Number</h6>
+                                        <h3 id="roomNumber" class="text-primary">204</h3>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="text-muted">Floor</h6>
+                                            <p class="fs-5 mb-0" id="roomFloor">2nd Floor</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="text-muted">Capacity</h6>
+                                            <p class="fs-5 mb-0" id="roomCapacity">3 Students</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="text-muted">Current Occupancy</h6>
+                                            <p class="fs-5 mb-0" id="roomOccupancy">2 / 3</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <h6 class="text-muted">Available Beds</h6>
+                                            <p class="fs-5 mb-0 text-success" id="roomAvailable">1 Bed</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <h6 class="text-muted">Room Type</h6>
+                                        <p class="mb-0" id="roomType">Standard Triple Room</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Roommates Card -->
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-success text-white">
+                                    <i class="fas fa-users me-1"></i>
+                                    My Roommates
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted mb-3">People sharing Room 204 with you:</p>
+                                    <div id="roommatesList">
+                                        <!-- Roommates will be dynamically inserted here -->
+                                    </div>
+                                    <div class="alert alert-info mt-3" role="alert">
+                                        <i class="fas fa-info-circle"></i> <strong>Note:</strong> There is 1 available bed in your room. A new roommate may be assigned soon.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Guidelines Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>
+                                    Room Guidelines & Rules
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="text-primary">General Rules:</h6>
+                                            <ul>
+                                                <li>Keep the room clean and organized</li>
+                                                <li>Respect quiet hours (10 PM - 8 AM)</li>
+                                                <li>No smoking or alcohol in rooms</li>
+                                                <li>Guests must be registered at front desk</li>
+                                                <li>Report maintenance issues immediately</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 class="text-primary">Safety Guidelines:</h6>
+                                            <ul>
+                                                <li>Do not prop open fire doors</li>
+                                                <li>Know your evacuation route</li>
+                                                <li>Keep emergency contact updated</li>
+                                                <li>Lock your door when leaving</li>
+                                                <li>Report suspicious activity</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; UniDorms 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,147 @@
+<section class="dashboard sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="#home">UniDorms</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#admin-settings">Settings</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="#admin-dashboard">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Admin</div>
+                            <a class="nav-link" href="#admin-rooms">
+                                <div class="sb-nav-link-icon"><i class="fas fa-door-open"></i></div>
+                                Rooms
+                            </a>
+                            <a class="nav-link" href="#admin-meals">
+                                <div class="sb-nav-link-icon"><i class="fas fa-utensils"></i></div>
+                                Meals
+                            </a>
+                            <a class="nav-link" href="#admin-requests">
+                                <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
+                                Requests
+                            </a>
+                            <a class="nav-link" href="#admin-announcements">
+                                <div class="sb-nav-link-icon"><i class="fas fa-bullhorn"></i></div>
+                                Announcements
+                            </a>
+
+                            <div class="sb-sidenav-menu-heading">Profile</div>
+                            <a class="nav-link" href="#admin-settings">
+                                <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        admin@gmail.com
+                    </div>
+                </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Announcements Management</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="#admin-dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Announcements</li>
+                    </ol>
+                    
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createAnnouncementModal">
+                            <i class="fas fa-plus"></i> Create New Announcement
+                        </button>
+                    </div>
+
+                    <!-- Create Announcement Modal -->
+                    <div class="modal fade" id="createAnnouncementModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createAnnouncementLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="createAnnouncementLabel">Create New Announcement</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="createTitle" class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="createTitle" placeholder="Enter announcement title...">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="createContent" class="form-label">Content</label>
+                                        <textarea class="form-control" id="createContent" rows="10" placeholder="Write the full announcement content here..."></textarea>
+                                        <small class="text-muted">Write the complete announcement text that will be visible to all students.</small>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-success">Create Announcement</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                               
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            All Announcements
+                        </div>
+                        <div class="card-body">
+                            <table id="announcementsDataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>User Name</th>
+                                        <th>Created At</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>User Name</th>
+                                        <th>Created At</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="announcementsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; UniDorms 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</section>
