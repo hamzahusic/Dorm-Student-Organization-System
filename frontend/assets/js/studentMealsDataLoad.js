@@ -41,7 +41,11 @@ function studentMealsInit() {
         mealCard.innerHTML = `
             <div class="card-header bg-${meal.bgColor} text-white">
                 <i class="${meal.icon} me-2"></i>
-                <strong>${meal.type}</strong>
+                <strong>${meal.type} - 
+                ${meal.type == "Breakfast" ? "Sign up for meal until 7AM (Breakfast starts at 9AM)"
+                  : meal.type == "Lunch" ? "Sign up for meal until 1PM (Lunch starts at 3PM)"
+                  : "Sign up for meal until 5PM (Dinner starts at 7PM)"
+                }</strong>
             </div>
             <div class="card-body">
                 <div class="row">
