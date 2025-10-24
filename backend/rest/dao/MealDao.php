@@ -56,6 +56,18 @@ require_once __DIR__ . "/BaseDao.php";
             ,["id" => $user_meal_id]);
         }
 
+        public function get_all_meals(){
+            return $this->query("
+                SELECT
+                    m.id,
+                    m.name,
+                    m.`type`,
+                    m.description,
+                    m.`date` 
+                FROM meals m;
+            ",[]);
+        }
+
     }
     
 
