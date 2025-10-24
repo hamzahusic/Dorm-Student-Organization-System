@@ -1,8 +1,8 @@
 <?php
 
-    require_once __DIR__ . '/MealDao.php';
+    require_once __DIR__ . '/UserDao.php';
 
-    $user_dao = new MealDao();
+    $user_dao = new UserDao();
     // // $user = $user_dao->create_student_request(1, "Test", "Test123");
     // // print_r($user);
 
@@ -12,6 +12,6 @@
     // $removed = $user_dao->remove_request(1);
     // print_r($removed);
 
-    $student_rooms = $user_dao->get_todays_meals(1);
+    $student_rooms = $user_dao->get_all_students(1);
     print_r($student_rooms);
 ?>

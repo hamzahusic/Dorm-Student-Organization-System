@@ -190,7 +190,6 @@ function datatablesSimpleDemo() {
                                     <select class="form-select" id="active${student.id}">
                                         <option value="Active" ${student.active === 'Active' ? 'selected' : ''}>Active</option>
                                         <option value="Inactive" ${student.active === 'Inactive' ? 'selected' : ''}>Inactive</option>
-                                        <option value="Pending" ${student.active === 'Pending' ? 'selected' : ''}>Pending</option>
                                     </select>
                                 </div>
                             </div>
