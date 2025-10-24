@@ -116,6 +116,10 @@ function announcementsAdminDataTableDemo() {
                                         <input type="text" class="form-control" id="editTitle${announcement.id}" value="${announcement.title}">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="editThumbnail${announcement.id}" class="form-label">Thumbnail URL</label>
+                                        <input type="text" class="form-control" id="editThumbnail${announcement.id}" placeholder="Enter thumbnail url...">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="editContent${announcement.id}" class="form-label">Content</label>
                                         <textarea class="form-control" id="editContent${announcement.id}" rows="12">${announcement.content}</textarea>
                                         <small class="text-muted">Edit the full announcement content.</small>
