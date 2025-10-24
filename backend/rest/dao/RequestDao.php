@@ -23,12 +23,19 @@ require_once __DIR__ . "/BaseDao.php";
             WHERE u.id = :student_id;", ['student_id' => $student_id]);
         }
 
-        public function create_student_request($user_id, $title, $description){
-            return $this->add(["user_id" => $user_id, "title" => $title, "description" => $description]);
-        }
-
-        public function delete_request($request_id){
-            return $this->delete($request_id);
+        public function get_all_request(){
+            return $this->query(
+                "SELECT DISTINCT
+                    r.id,
+                    r.title,
+                    r.description,
+                    r.status,
+                    r.created_at,
+                    CONCAT(u.first_name, ' ', u.last_name ) as name,
+                    u.room_id as room_number
+                FROM requests r
+                JOIN users u on r.user_id = u.id;"
+            ,[]);
         }
 
     }
