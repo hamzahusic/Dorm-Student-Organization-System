@@ -12,6 +12,6 @@
     // $removed = $user_dao->remove_request(1);
     // print_r($removed);
 
-    $student_rooms = $user_dao->get_all_students(1);
+    $student_rooms = $user_dao->getAll();
     print_r($student_rooms);
 ?>

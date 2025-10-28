@@ -44,6 +44,10 @@
             return $stmt->fetch();
         }
 
+        public function getAll(){
+            return $this->query("SELECT * FROM " . $this->table_name,[]);
+        }
+
         public function add($entity){
             $query = "INSERT INTO " . $this->table_name . " (";
             foreach ($entity as $column => $value) {
