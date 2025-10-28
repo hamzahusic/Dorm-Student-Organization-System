@@ -1,9 +1,6 @@
 function studentRequestsInit() {
     const studentRequestsTable = document.getElementById('studentRequestsTable');
     const studentRequestsTableBody = document.getElementById('studentRequestsTableBody');
-    const requestForm = document.getElementById('requestForm');
-    const requestDescription = document.getElementById('requestDescription');
-    const charCount = document.getElementById('charCount');
 
     // Mock data for student's requests
     const studentRequests = [
@@ -36,48 +33,7 @@ function studentRequestsInit() {
             createdAt: "2024-10-12"
         }
     ];
-
-    // Character counter for description
-    if (requestDescription && charCount) {
-        requestDescription.addEventListener('input', function() {
-            charCount.textContent = this.value.length;
-        });
-    }
-
-    // Handle form submission
-    if (requestForm) {
-        requestForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const title = document.getElementById('requestTitle').value;
-            const description = document.getElementById('requestDescription').value;
-
-            if (!title || !description) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            // In real app, this would send to server
-            console.log('New request submitted:', { title, description });
-            alert('Request submitted successfully!');
-            
-            // Reset form
-            requestForm.reset();
-            charCount.textContent = '0';
-        });
-    }
-
-    // Helper function to format date
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric' 
-        });
-    }
-
-    // Render requests table
+    
     if (studentRequestsTableBody) {
         studentRequests.forEach(request => {
             const row = document.createElement('tr');
@@ -85,9 +41,40 @@ function studentRequestsInit() {
             row.innerHTML = `
                 <td><strong>${request.title}</strong></td>
                 <td>${request.description}</td>
-                <td>${formatDate(request.createdAt)}</td>
+                <td>${request.createdAt}</td>
                 <td>${request.status}</td>
                 <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#updateRequest${request.id}">
+                        <i class="fas fa-pen"></i> Edit
+                    </button>
+
+                    <!-- Modal For Updating Request Details -->
+                    <div class="modal fade" id="updateRequest${request.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabelReq${request.id}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="updateLabelReq${request.id}">Update Student Details</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="title${request.id}" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="title${request.id}" placeholder="Title 123..." value="${request.title}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description${request.id}" class="form-label">Last name</label>
+                                    <textarea type="text" class="form-control" rows="3" id="description${request.id}" placeholder="Mirror broken..." value="${request.description}"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary">Update</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div> 
+
                     <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${request.id}">
                         <i class="fas fa-trash-alt"></i> Delete
                     </button>
