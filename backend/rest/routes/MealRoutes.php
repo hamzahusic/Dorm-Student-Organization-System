@@ -38,7 +38,6 @@ Flight::route('PUT /meals', function(){
    Flight::json(Flight::mealService()->update($data,$id));
 });
 
-
 Flight::route('DELETE /meals/@meal_id', function($meal_id){
    Flight::json(Flight::mealService()->delete($meal_id));
 });
