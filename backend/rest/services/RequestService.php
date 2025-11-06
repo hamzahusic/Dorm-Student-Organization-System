@@ -18,6 +18,10 @@ class RequestService extends BaseService {
     public function get_all_request(){
         return $this->dao->get_all_request();
     }
+
+    public function get_request_information($id){
+        return $this->dao->get_request_information($id);
+    }
    
 }
 ?>

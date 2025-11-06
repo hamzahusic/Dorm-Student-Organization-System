@@ -4,9 +4,9 @@
 * @OA\Get(
 *      path="/users",
 *      tags={"users"},
- *     security={
- *         {"ApiKey": {}}
- *     },
+*      security={
+*         {"ApiKey": {}}
+*      },
 *      summary="Get all users",
 *      @OA\Response(
 *           response=200,
@@ -33,10 +33,10 @@ Flight::route('GET /users', function(){
 * @OA\Get(
 *      path="/users/stats",
 *      tags={"users"},
- *     security={
- *         {"ApiKey": {}}
- *     },
-*      summary="Get sats for the number of students per year (just for admins)",
+*      security={
+*         {"ApiKey": {}}
+*      },
+*      summary="Get stats for the number of students per year (just for admins)",
 *      @OA\Response(
 *           response=200,
 *           description="Array of all users per year in the database"
