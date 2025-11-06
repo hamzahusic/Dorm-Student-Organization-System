@@ -1,5 +1,17 @@
 <?php
 
+/**
+* @OA\Get(
+*      path="/users",
+*      tags={"users"},
+*      summary="Get all users",
+*      @OA\Response(
+*           response=200,
+*           description="Array of all users in the database"
+*      )
+* )
+*/
+
 Flight::route('GET /users', function(){
     $result = Flight::userService()->get_all();
 
