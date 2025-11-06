@@ -16,6 +16,8 @@ Flight::route('GET /users/stats', function(){
 
 Flight::route('GET /users/@id', function($id){
     $user = Flight::userService()->get_by_id($id);
+    //I will have special if statement when user is requesting his info
+    //e.g profile page for changing password
     unset($user['password']);
     Flight::json($user);
 });
