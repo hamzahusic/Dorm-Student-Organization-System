@@ -4,6 +4,9 @@
  * @OA\Get(
  *     path="/rooms",
  *     tags={"rooms"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Get all rooms",
  *     @OA\Response(
  *         response=200,
@@ -24,6 +27,9 @@ Flight::route('GET /rooms', function(){
  * @OA\Get(
  *     path="/room/info/{id}",
  *     tags={"rooms"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Fetch individual room by ID.",
  *     @OA\Parameter(
  *         name="id",
@@ -53,6 +59,9 @@ Flight::route('GET /room/info/@id', function($id){
  *     summary="Create a new room",
  *     description="Add a new room to the database.",
  *     tags={"rooms"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="New room information",
  *         required=true,
@@ -102,6 +111,9 @@ Flight::route('POST /room', function(){
  *     summary="Update a room",
  *     description="Update room information.",
  *     tags={"rooms"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="Updated room information",
  *         required=false,
@@ -150,6 +162,9 @@ Flight::route('PUT /room', function(){
  *     summary="Delete a room by ID.",
  *     description="Delete a room from the database using its ID.",
  *     tags={"rooms"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",

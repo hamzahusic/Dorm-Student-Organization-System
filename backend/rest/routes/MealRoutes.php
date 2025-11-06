@@ -4,6 +4,9 @@
  * @OA\Get(
  *     path="/meals",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Get all meals",
  *     @OA\Response(
  *         response=200,
@@ -24,6 +27,9 @@ Flight::route('GET /meals', function(){
  * @OA\Get(
  *     path="/meals/per_day",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Get taken meals per day (admin dashboard stats)",
  *     @OA\Response(
  *         response=200,
@@ -45,6 +51,9 @@ Flight::route('GET /meals/per_day', function(){
  * @OA\Get(
  *     path="/student/meals/per_day/{student_id}",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Get student taken meals per day (student dashboard stats)",
  *     @OA\Parameter(
  *         name="student_id",
@@ -73,6 +82,9 @@ Flight::route('GET /student/meals/per_day/@student_id', function($student_id){
  * @OA\Get(
  *     path="/student/meals/today/{student_id}",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Get today's meals for a student",
  *     @OA\Parameter(
  *         name="student_id",
@@ -102,6 +114,9 @@ Flight::route('GET /student/meals/today/@student_id', function($student_id){
  *     summary="Take a meal",
  *     description="Student takes a meal.",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="Meal taking information",
  *         required=true,
@@ -143,6 +158,9 @@ Flight::route('POST /student/meals', function(){
  *     summary="Delete a taken meal by ID.",
  *     description="Delete a taken meal record from the database using its ID.",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\Parameter(
  *         name="user_meal_id",
  *         in="path",
@@ -171,6 +189,9 @@ Flight::route('DELETE /student/meals/@user_meal_id', function($user_meal_id){
  *     summary="Create a new meal",
  *     description="Add a new meal to the database.",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="New meal information",
  *         required=true,
@@ -225,6 +246,9 @@ Flight::route('POST /meals', function(){
  *     summary="Update a meal",
  *     description="Update meal information.",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="Updated meal information",
  *         required=false,
@@ -284,6 +308,9 @@ Flight::route('PUT /meals', function(){
  *     summary="Delete a meal by ID.",
  *     description="Delete a meal from the database using its ID.",
  *     tags={"meals"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\Parameter(
  *         name="meal_id",
  *         in="path",

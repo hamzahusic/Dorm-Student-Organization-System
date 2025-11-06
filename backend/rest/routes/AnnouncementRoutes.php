@@ -4,6 +4,9 @@
  * @OA\Get(
  *     path="/announcements",
  *     tags={"announcements"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Get all announcements",
  *     @OA\Response(
  *         response=200,
@@ -25,6 +28,9 @@ Flight::route('GET /announcements', function(){
  * @OA\Get(
  *     path="/announcement/{id}",
  *     tags={"announcements"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Fetch individual announcement by ID.",
  *     @OA\Parameter(
  *         name="id",
@@ -55,6 +61,9 @@ Flight::route('GET /announcement/@id', function($id){
  *     summary="Create a new announcement",
  *     description="Add a new announcement to the database.",
  *     tags={"announcements"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="New announcement information",
  *         required=true,
@@ -104,6 +113,9 @@ Flight::route('POST /announcement', function(){
  *     summary="Update an announcement",
  *     description="Update announcement information.",
  *     tags={"announcements"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="Updated announcement information",
  *         required=false,
@@ -158,6 +170,9 @@ Flight::route('PUT /announcement', function(){
  *     summary="Delete an announcement by ID.",
  *     description="Delete an announcement from the database using its ID.",
  *     tags={"announcements"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
