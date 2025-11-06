@@ -4,6 +4,9 @@
 * @OA\Get(
 *      path="/users",
 *      tags={"users"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
 *      summary="Get all users",
 *      @OA\Response(
 *           response=200,
@@ -30,6 +33,9 @@ Flight::route('GET /users', function(){
 * @OA\Get(
 *      path="/users/stats",
 *      tags={"users"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
 *      summary="Get sats for the number of students per year (just for admins)",
 *      @OA\Response(
 *           response=200,
@@ -50,6 +56,9 @@ Flight::route('GET /users/stats', function(){
  * @OA\Get(
  *     path="/users/{id}",
  *     tags={"users"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     summary="Fetch individual user by ID.",
  *     @OA\Parameter(
  *         name="id",
@@ -83,6 +92,9 @@ Flight::route('GET /users/@id', function($id){
  *     summary="Update a user",
  *     description="Update user information.",
  *     tags={"users"},
+ *     security={
+ *         {"ApiKey": {}}
+ *     },
  *     @OA\RequestBody(
  *         description="Updated user information",
  *         required=false,
@@ -204,6 +216,7 @@ Flight::route('PUT /users', function(){
  */
 
 Flight::route('DELETE /users/@id', function($id){
+    //I will add here logic to not delete user if it is admin
     $result = Flight::userService()->delete($id);
     Flight::json($result);
 });
