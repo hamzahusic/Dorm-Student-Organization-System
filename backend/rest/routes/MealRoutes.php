@@ -73,7 +73,7 @@ Flight::route('GET /meals/per_day', function(){
  * )
  */
 
-//Stats for single student dashboard
+//Stats for single student (student dashboard)
 Flight::route('GET /student/meals/per_day/@student_id', function($student_id){
     Flight::json(Flight::mealService()->get_student_taken_meals($student_id));
 });
@@ -147,9 +147,20 @@ Flight::route('GET /student/meals/today/@student_id', function($student_id){
  * )
  */
 
+// Implement logic to check if that meal exists first.
+// If it does that do it, if not return back error
+
 Flight::route('POST /student/meals', function(){
    $data = Flight::request()->data->getData();
-   Flight::json(Flight::mealService()->take_meal($data['user_id'],$data['meal_id']));
+
+   $response = Flight::mealService()->take_meal($data['user_id'],$data['meal_id']);
+
+   if($response['success']){
+      Flight::json($response);
+   }else{
+      Flight::halt(500, $response['error']);
+   }
+
 });
 
 /**

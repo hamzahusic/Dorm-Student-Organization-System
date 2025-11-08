@@ -13,16 +13,19 @@ require_once __DIR__ . "/BaseDao.php";
 
         public function get_todays_meals($user_id){
             return $this->query("SELECT DISTINCT
-                m.id as meal_id,
-                m.`type`,
-                m.name,
-                m.description,
-                um.id as user_meal_id,
-                um.created_at as taken_at,
-                CASE WHEN um.user_id IS NOT NULL THEN true ELSE false END as taken
-            FROM meals m 
-            LEFT JOIN user_meals um on m.id = um.meal_id
-            WHERE m.date = CURRENT_DATE() AND um.user_id = :id",
+                    m.id as meal_id,
+                    m.type,
+                    m.name,
+                    m.description,
+                    um.id as user_meal_id,
+                    um.created_at as taken_at,
+                    CASE 
+                        WHEN um.id IS NOT NULL THEN true 
+                        ELSE false 
+                    END as taken
+                FROM meals m
+                LEFT JOIN user_meals um ON m.id = um.meal_id AND um.user_id = :id
+                WHERE m.date = CURRENT_DATE();",
             ["id" => $user_id]);
         }
 

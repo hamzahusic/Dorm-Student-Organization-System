@@ -24,7 +24,19 @@ class MealService extends BaseService {
     }
     
     public function take_meal($user_id, $meal_id){
-        return $this->dao->take_meal($user_id, $meal_id);
+        $response = $this->dao->getById($meal_id);
+
+        if(!$response){
+            return ['success' => false, 'error' => 'Meal does not exist'];
+        }
+
+        $data = $this->dao->take_meal($user_id, $meal_id);
+
+        return [
+            'message' => "Meal taken",
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function delete_taken_meal($user_meal_id){
