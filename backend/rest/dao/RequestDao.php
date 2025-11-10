@@ -38,6 +38,21 @@ require_once __DIR__ . "/BaseDao.php";
             ,[]);
         }
 
+        public function get_request_information($id){
+            return $this->query("SELECT DISTINCT
+                    r.id,
+                    r.title,
+                    r.description,
+                    r.status,
+                    r.created_at,
+                    CONCAT(u.first_name, ' ', u.last_name ) as name,
+                    u.room_id as room_number
+                FROM requests r
+                JOIN users u on r.user_id = u.id
+                WHERE r.id = :id;
+            ",['id' => $id]);
+        }
+
     }
     
 
