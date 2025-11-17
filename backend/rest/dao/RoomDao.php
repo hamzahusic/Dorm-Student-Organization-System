@@ -14,17 +14,13 @@ require_once __DIR__ . "/BaseDao.php";
         public function get_room_information($room_id){
             return $this->query("SELECT DISTINCT
                     u.id as student_id,
-                    r.id as room_number,
-                    r.floor as floor_number,
                     CONCAT(u.first_name,' ', u.last_name) as name,
                     u.faculty,
                     u.email,
                     u.`year`,
-                    u.phone,
-                    r.capacity
+                    u.phone
                 FROM users u
-                JOIN rooms r on u.room_id = r.id 
-                WHERE r.id = :room_id AND u.is_active = true
+                WHERE u.room_id = :room_id AND u.is_active = true
                 ORDER BY name ASC", ['room_id' => $room_id]);
         }
 

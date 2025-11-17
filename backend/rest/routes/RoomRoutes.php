@@ -43,6 +43,10 @@ Flight::route('GET /rooms', function(){
  *         description="Fetch individual room information."
  *     ),
  *     @OA\Response(
+ *         response=404,
+ *         description="Room doesn't exist."
+ *     ),
+ *     @OA\Response(
  *         response=500,
  *         description="Internal server error."
  *     )
@@ -50,7 +54,15 @@ Flight::route('GET /rooms', function(){
  */
 
 Flight::route('GET /room/info/@id', function($id){
-    Flight::json(Flight::roomService()->get_room_information($id));
+    $result = Flight::roomService()->get_room_information($id);
+    $room_info = Flight::roomService()->get_by_id($id);
+
+    if($room_info){
+        Flight::json(array_merge($room_info,['students' => $result]));
+    }else{
+        Flight::halt(404,"Room doesn't exist.");
+    }
+    
 });
 
 /**
@@ -135,12 +147,25 @@ Flight::route('POST /room', function(){
  *                 type="integer",
  *                 example=1,
  *                 description="Floor number"
+ *             ),
+ *             @OA\Property(
+ *                 property="students_ids",
+ *                 type="array",
+ *                 description="Array of students IDs assigned to this room",
+ *                 @OA\Items(
+ *                     type="integer",
+ *                     example=45
+ *                 )
  *             )
  *         )
  *     ),
  *     @OA\Response(
  *         response=200,
  *         description="Room has been updated successfully."
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Room doesn't exist or room capacity exceeded."
  *     ),
  *     @OA\Response(
  *         response=500,
@@ -151,7 +176,42 @@ Flight::route('POST /room', function(){
 
 Flight::route('PUT /room', function(){
     $data = Flight::request()->data->getData();
-    $result = Flight::roomService()->update($data,$data['id']);
+    $room_id = $data['id'];
+    $room_info = Flight::roomService()->get_by_id($room_id);
+    $students = $data['students_ids'];
+    
+    if(!$room_info){
+        Flight::halt(404,"Room doesn't exist");
+        return;
+    }
+    
+    if(count($students) > $room_info['capacity'] && count($students) > $data['capacity']){
+        Flight::halt(404,"Room capacity exceeded");
+        return;
+    }
+    
+    $room_assignees = Flight::roomService()->get_room_information($room_id);
+
+    foreach($room_assignees as $assignee){
+        Flight::userService()->update(
+            [
+                'room_id' => NULL
+            ],
+            $assignee['student_id']
+        );
+    }
+    
+    unset($data['students_ids']);
+    $result = Flight::roomService()->update($data,$room_id);
+
+    foreach($students as $student_id){
+        Flight::userService()->update(
+            [
+                'room_id' => $room_id
+            ],
+            $student_id
+        );
+    }
 
     Flight::json($result);
 });
