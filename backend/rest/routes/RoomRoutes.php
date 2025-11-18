@@ -182,12 +182,10 @@ Flight::route('PUT /room', function(){
     
     if(!$room_info){
         Flight::halt(404,"Room doesn't exist");
-        return;
     }
     
     if(count($students) > $room_info['capacity'] && count($students) > $data['capacity']){
         Flight::halt(404,"Room capacity exceeded");
-        return;
     }
     
     $room_assignees = Flight::roomService()->get_room_information($room_id);

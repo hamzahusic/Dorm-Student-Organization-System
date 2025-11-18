@@ -39,7 +39,9 @@ require_once __DIR__ . "/BaseDao.php";
                 JOIN user_meals um ON u.id = um.user_id 
                 JOIN meals m ON um.meal_id = m.id
                 WHERE u.id = :student_id
-                GROUP BY DATE(m.date);", ['student_id' => $student_id]);
+                GROUP BY DATE(m.date)
+                ORDER BY DATE(m.date) DESC
+                LIMIT 15;", ['student_id' => $student_id]);
         }
 
         //how many meals students have taken per 

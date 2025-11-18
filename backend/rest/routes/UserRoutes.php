@@ -216,8 +216,7 @@ Flight::route('PUT /users', function(){
  */
 
 Flight::route('DELETE /users/@id', function($id){
-    //I will add here logic to not delete user if it is admin
-    $result = Flight::userService()->delete($id);
+    $result = Flight::userService()->update(['is_active' => 0, 'room_id' => NULL],$id);
     Flight::json($result);
 });
 
