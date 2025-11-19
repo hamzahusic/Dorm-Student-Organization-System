@@ -20,7 +20,9 @@
  */
 
 Flight::route('GET /meals', function(){
-    Flight::json(Flight::mealService()->get_all());
+   Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
+   Flight::json(Flight::mealService()->get_all());
 });
 
 /**
@@ -44,24 +46,19 @@ Flight::route('GET /meals', function(){
 
 //Stats for admin dashboard
 Flight::route('GET /meals/per_day', function(){
-    Flight::json(Flight::mealService()->get_taken_meals_per_day());
+   Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
+   Flight::json(Flight::mealService()->get_taken_meals_per_day());
 });
 
 /**
  * @OA\Get(
- *     path="/student/meals/per_day/{student_id}",
+ *     path="/student/meals/per_day",
  *     tags={"meals"},
  *     security={
  *         {"ApiKey": {}}
  *     },
  *     summary="Get student taken meals per day (student dashboard stats)",
- *     @OA\Parameter(
- *         name="student_id",
- *         in="path",
- *         required=true,
- *         description="Student ID",
- *         @OA\Schema(type="integer", example=1)
- *     ),
  *     @OA\Response(
  *         response=200,
  *         description="Statistics of student's taken meals per day"
@@ -74,25 +71,21 @@ Flight::route('GET /meals/per_day', function(){
  */
 
 //Stats for single student (student dashboard)
-Flight::route('GET /student/meals/per_day/@student_id', function($student_id){
-    Flight::json(Flight::mealService()->get_student_taken_meals($student_id));
+Flight::route('GET /student/meals/per_day', function(){
+   $user = Flight::get('user');
+   Flight::auth_middleware()->authorizeRole(Roles::STUDENT);
+
+   Flight::json(Flight::mealService()->get_student_taken_meals($user->id));
 });
 
 /**
  * @OA\Get(
- *     path="/student/meals/today/{student_id}",
+ *     path="/student/meals/today",
  *     tags={"meals"},
  *     security={
  *         {"ApiKey": {}}
  *     },
  *     summary="Get today's meals for a student",
- *     @OA\Parameter(
- *         name="student_id",
- *         in="path",
- *         required=true,
- *         description="Student ID",
- *         @OA\Schema(type="integer", example=1)
- *     ),
  *     @OA\Response(
  *         response=200,
  *         description="Array of today's meals for the student"
@@ -104,8 +97,11 @@ Flight::route('GET /student/meals/per_day/@student_id', function($student_id){
  * )
  */
 
-Flight::route('GET /student/meals/today/@student_id', function($student_id){
-   Flight::json(Flight::mealService()->get_todays_meals($student_id));
+Flight::route('GET /student/meals/today', function(){
+   $user = Flight::get('user');
+   Flight::auth_middleware()->authorizeRole(Roles::STUDENT);
+
+   Flight::json(Flight::mealService()->get_todays_meals($user->id));
 });
 
 /**
@@ -121,13 +117,7 @@ Flight::route('GET /student/meals/today/@student_id', function($student_id){
  *         description="Meal taking information",
  *         required=true,
  *         @OA\JsonContent(
- *             required={"user_id", "meal_id"},
- *             @OA\Property(
- *                 property="user_id",
- *                 type="integer",
- *                 example=1,
- *                 description="User ID"
- *             ),
+ *             required={"meal_id"},
  *             @OA\Property(
  *                 property="meal_id",
  *                 type="integer",
@@ -141,24 +131,27 @@ Flight::route('GET /student/meals/today/@student_id', function($student_id){
  *         description="Meal has been taken successfully."
  *     ),
  *     @OA\Response(
+ *         response=404,
+ *         description="Meal does not exist."
+ *     ),
+ *     @OA\Response(
  *         response=500,
  *         description="Internal server error."
  *     )
  * )
  */
 
-// Implement logic to check if that meal exists first.
-// If it does that do it, if not return back error
-
 Flight::route('POST /student/meals', function(){
+   $user = Flight::get('user');
+   Flight::auth_middleware()->authorizeRole(Roles::STUDENT);
    $data = Flight::request()->data->getData();
 
-   $response = Flight::mealService()->take_meal($data['user_id'],$data['meal_id']);
+   $response = Flight::mealService()->take_meal($user->id,$data['meal_id']);
 
    if($response['success']){
       Flight::json($response);
    }else{
-      Flight::halt(500, $response['error']);
+      Flight::halt(404, $response['error']);
    }
 
 });
@@ -191,6 +184,7 @@ Flight::route('POST /student/meals', function(){
  */
 
 Flight::route('DELETE /student/meals/@user_meal_id', function($user_meal_id){
+   Flight::auth_middleware()->authorizeRole(Roles::STUDENT);
    Flight::json(Flight::mealService()->delete_taken_meal($user_meal_id));
 });
 
@@ -247,6 +241,7 @@ Flight::route('DELETE /student/meals/@user_meal_id', function($user_meal_id){
  */
 
 Flight::route('POST /meals', function(){
+   Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
    $data = Flight::request()->data->getData();
    Flight::json(Flight::mealService()->add($data));
 });
@@ -309,6 +304,7 @@ Flight::route('POST /meals', function(){
  */
 
 Flight::route('PUT /meals', function(){
+   Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
    $data = Flight::request()->data->getData();
    Flight::json(Flight::mealService()->update($data,$data['id']));
 });
@@ -341,6 +337,7 @@ Flight::route('PUT /meals', function(){
  */
 
 Flight::route('DELETE /meals/@meal_id', function($meal_id){
+   Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
    Flight::json(Flight::mealService()->delete($meal_id));
 });
 

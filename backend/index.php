@@ -7,7 +7,8 @@ require_once __DIR__ . '/rest/services/RoomService.php';
 require_once __DIR__ . '/rest/services/RequestService.php';
 require_once __DIR__ . '/rest/services/AnnouncementService.php';
 require_once __DIR__ . '/rest/services/AuthService.php';
-require_once __DIR__ . "/middleware/AuthMiddleware.php";
+require_once __DIR__ . '/middleware/AuthMiddleware.php';
+require_once __DIR__ . '/data/Roles.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -24,7 +25,7 @@ Flight::before('start', function() {
     if(
         strpos(Flight::request()->url, '/auth/login') === 0 ||
         strpos(Flight::request()->url, '/auth/register') === 0 ||
-        strpos(Flight::request()->url, '/announcement') === 0 
+        strpos(Flight::request()->url, '/public') === 0 
     ) {
         return TRUE;
     } else {
