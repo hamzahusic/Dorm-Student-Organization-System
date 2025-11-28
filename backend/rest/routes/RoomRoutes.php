@@ -20,6 +20,7 @@
  */
 
 Flight::route('GET /rooms', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::roomService()->get_all_rooms());
 });
 
@@ -54,14 +55,20 @@ Flight::route('GET /rooms', function(){
  */
 
 Flight::route('GET /room/info/@id', function($id){
-    $result = Flight::roomService()->get_room_information($id);
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT, Roles::ADMIN]);
+    $user = Flight::get('user');
     $room_info = Flight::roomService()->get_by_id($id);
-
-    if($room_info){
-        Flight::json(array_merge($room_info,['students' => $result]));
-    }else{
+    
+    if(!$room_info){
         Flight::halt(404,"Room doesn't exist.");
     }
+
+    if($room_info['id'] !== $user->room_id && $user->role !== Roles::ADMIN){
+        Flight::halt(403, "Unauthorized access");
+    }
+
+    $result = Flight::roomService()->get_room_information($id);
+    Flight::json(array_merge($room_info,['students' => $result]));
     
 });
 
@@ -111,6 +118,7 @@ Flight::route('GET /room/info/@id', function($id){
  */
 
 Flight::route('POST /room', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     $result = Flight::roomService()->add($data);
 
@@ -175,6 +183,7 @@ Flight::route('POST /room', function(){
  */
 
 Flight::route('PUT /room', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     $room_id = $data['id'];
     $room_info = Flight::roomService()->get_by_id($room_id);
@@ -242,6 +251,7 @@ Flight::route('PUT /room', function(){
  */
 
 Flight::route('DELETE /room/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $result = Flight::roomService()->delete($id);
     Flight::json($result);
 });
