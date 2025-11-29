@@ -20,10 +20,17 @@
 */
 
 Flight::route('GET /users', function(){
-    $result = Flight::userService()->get_all();
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT,Roles::ADMIN]);
+    $user = Flight::get('user');
+    $result;
 
-    foreach($result as &$user){
-        unset($user['password']);
+    if($user->role == Roles::ADMIN){
+        $result = Flight::userService()->get_all();
+        foreach($result as &$user){
+            unset($user['password']);
+        }
+    }else{
+        $result = Flight::userService()->get_by_id($user->id);
     }
 
     Flight::json($result);
@@ -49,6 +56,7 @@ Flight::route('GET /users', function(){
 */
 
 Flight::route('GET /users/stats', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::userService()->get_students_per_year());
 });
 
@@ -79,11 +87,15 @@ Flight::route('GET /users/stats', function(){
  */
 
 Flight::route('GET /users/@id', function($id){
-    $user = Flight::userService()->get_by_id($id);
-    //I will have special if statement when user is requesting his info
-    //e.g profile page for changing password
-    unset($user['password']);
-    Flight::json($user);
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    $user_info = Flight::userService()->get_by_id($id);
+
+    if(!$user_info){
+        Flight::halt(403,"User not found");
+    }
+
+    unset($user_info['password']);
+    Flight::json($user_info);
 });
 
 /**
@@ -136,12 +148,6 @@ Flight::route('GET /users/@id', function($id){
  *                 description="User role"
  *             ),
  *             @OA\Property(
- *                 property="room_id",
- *                 type="integer",
- *                 example=101,
- *                 description="Room ID"
- *             ),
- *             @OA\Property(
  *                 property="is_active",
  *                 type="boolean",
  *                 example=true,
@@ -179,11 +185,37 @@ Flight::route('GET /users/@id', function($id){
  */
 
 Flight::route('PUT /users', function(){
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT,Roles::ADMIN]);
+    $user = Flight::get('user');
     $data = Flight::request()->data->getData();
+    $result;
+
     
-    $result = Flight::userService()->update(
-        $data, (int)$data['id']
-    );
+    if($user->role == Roles::ADMIN){        
+        
+        if(!$data['id']){
+            Flight::halt(400, "Please provide user id");
+        }
+
+        $user_id = $data['id'];
+
+        if($data['id'] != $user->id){
+            unset($data['room_id']);
+            unset($data['password']);
+            unset($data['phone']);
+            unset($data['year']);
+            unset($data['id']);
+        }
+
+        $result = Flight::userService()->update($data,$user_id);
+    }else{
+        unset($data['id']);
+        unset($data['role']);
+        unset($data['room_id']);
+        unset($data['is_active']);
+        $result = Flight::userService()->update($data,$user->id);
+    }
+    
 
     Flight::json($result);
 });
@@ -216,6 +248,7 @@ Flight::route('PUT /users', function(){
  */
 
 Flight::route('DELETE /users/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $result = Flight::userService()->update(['is_active' => 0, 'room_id' => NULL],$id);
     Flight::json($result);
 });
