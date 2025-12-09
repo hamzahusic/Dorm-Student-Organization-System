@@ -2,46 +2,15 @@ let AdminService = {
 
     init: function () {
         console.log("INIT CALLED");
-        // // Validate Add form
-        // $("#addStudentForm").validate({
-        //     submitHandler: function (form) {
-        //         console.log("SUBMIT HANDLER FIRED");
-        //         let student = Object.fromEntries(new FormData(form).entries());
-        //         StudentService.addStudent(student);
-        //         form.reset();
-        //     }
-        // });
-        // console.log("INIT CALLED2");
-        // // Validate Edit form
-        // $("#editStudentForm").validate({
-        //     submitHandler: function (form) {
-        //         let student = Object.fromEntries(new FormData(form).entries());
-        //         StudentService.updateStudent(student);
-        //     }
-        // });
+
+        $("#editStudentForm").validate({
+            submitHandler: function (form) {
+                let student = Object.fromEntries(new FormData(form).entries());
+                AdminService.updateStudent(student);
+            }
+        });
 
         AdminService.getAllStudents();
-    },
-
-    addStudent: function (student) {
-        $.blockUI({ message: '<h3>Processing...</h3>' });
-
-        // MUST send JSON
-        RestClient.post(
-            "student",
-            JSON.stringify(student),
-            function (response) {
-                toastr.success("Student added successfully");
-                $.unblockUI();
-                StudentService.getAllStudents();
-                console.log("validate plugin exists?", typeof $("#addStudentForm").validate);
-                StudentService.closeModal();
-            },
-            function (response) {
-                $.unblockUI();
-                toastr.error(response.responseJSON?.message || "Error adding student");
-            }
-        );
     },
 
     getAllStudents: function () {
@@ -72,89 +41,18 @@ let AdminService = {
                 {
                     title: "Actions",
                     render: function (data, type, row) {
-                        return `<td style="display: flex; gap: 5px; align-items: center; justify-content: center;">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#updateBackdrop${row.id}">
-                        <i class="fas fa-pen"></i> Edit
-                    </button>
+                        return `
+                    <td style="display: flex; gap: 5px; align-items: center; justify-content: center;">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-primary" onclick="AdminService.openEditModal('${row.id}')">
+                            <i class="fas fa-pen"></i> Edit
+                        </button>
 
-                    <!-- Modal For Updating Student Details -->
-                    <div class="modal fade" id="updateBackdrop${row.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel${row.id}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="updateLabel${row.id}">Update Student Details</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="firstName${row.id}" class="form-label">First name</label>
-                                    <input type="text" class="form-control" id="firstName${row.id}" placeholder="John" value="${row.first_name}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lastName${row.id}" class="form-label">Last name</label>
-                                    <input type="text" class="form-control" id="lastName${row.id}" placeholder="Doe" value="${row.last_name}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email${row.id}" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email${row.id}" placeholder="john.doe@example.com" value="${row.email}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="faculty${row.id}" class="form-label">Faculty</label>
-                                    <input type="text" class="form-control" id="faculty${row.id}" placeholder="MIT" value="${row.faculty}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="roomNumber${row.id}" class="form-label">Room number</label>
-                                    <p>${row.room_id}</p>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="role${row.id}">Role</label>
-                                    <select class="form-select" id="role${row.id}">
-                                        <option value="student" selected>Student</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="active${row.id}">Active</label>
-                                    <select class="form-select" id="active${row.id}">
-                                        <option value="Active" ${row.active === 'Active' ? 'selected' : ''}>Active</option>
-                                        <option value="Inactive" ${row.active === 'Inactive' ? 'selected' : ''}>Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary">Update</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div> 
-
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBackdrop${row.id}">
-                        <i class="fas fa-trash-alt"></i>Remove
-                    </button>
-
-
-                    <!-- Modal For Deleting Student Details -->
-                    <div class="modal fade" id="deleteBackdrop${row.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteLabel${row.id}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="deleteLabel${row.id}">Delete Student</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete <strong>${row.first_name} ${row.last_name}</strong>?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div> 
-                </td>`
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-danger" onclick="AdminService.openDeleteModal('${row.id}', '${row.first_name} ${row.last_name}')">
+                            <i class="fas fa-trash-alt"></i>Remove
+                        </button>
+                    </td>`
                 }
                 }
             ], data, 10);
@@ -164,13 +62,18 @@ let AdminService = {
     getStudentById: function (id) {
         $.blockUI({ message: '<h3>Loading...</h3>' });
 
-        RestClient.get("student/" + id, function (data) {
+        RestClient.get("users/" + id, function (data) {
             localStorage.setItem('selected_student', JSON.stringify(data));
 
             // Populate EDIT modal
             $("#edit_student_id").val(data.id);
-            $("#edit_name").val(data.name);
-            $("#edit_email").val(data.email);
+            $("#first_name").val(data.first_name);
+            $("#last_name").val(data.last_name);
+            $("#email").val(data.email);
+            $("#faculty").val(data.faculty ? data.faculty : "");
+            $("#room_number").text(data.room_id ? data.room_id : "No room assigned");
+            $("#role").val(data.role);
+            $("#active").val(data.is_active);
 
             $.unblockUI();
         }, function () {
@@ -184,8 +87,8 @@ let AdminService = {
     },
 
     openEditModal: function (id) {
-        $('#editStudentModal').modal("show");
-        StudentService.getStudentById(id);
+        $('#updateStudentDetails').modal("show");
+        AdminService.getStudentById(id);
     },
 
     openViewMore: function (id) {
@@ -195,22 +98,25 @@ let AdminService = {
     },
 
     openDeleteModal: function (id, name) {
-        $("#deleteStudentModal").modal("show");
+        $("#deleteStudent").modal("show");
         $("#delete_student_id").val(id);
         $("#delete-student-body").html("Do you want to delete student: <b>" + name + "</b> ?");
     },
 
     updateStudent: function (student) {
+
+        document.activeElement.blur();
+        
         $.blockUI({ message: '<h3>Updating...</h3>' });
 
         RestClient.put(
-            "student/" + student.id,
+            "users",
             JSON.stringify(student),
             function () {
                 toastr.success("Student updated successfully");
                 $.unblockUI();
-                StudentService.closeModal();
-                StudentService.getAllStudents();
+                AdminService.closeModal();
+                AdminService.getAllStudents();
             },
             function () {
                 $.unblockUI();
@@ -220,19 +126,22 @@ let AdminService = {
     },
 
     deleteStudent: function () {
+
+        document.activeElement.blur();
+
         let id = $("#delete_student_id").val();
 
         RestClient.delete(
-            "student/" + id,
+            "users/" + id,
             null,
             function (response) {
                 toastr.success(response.message || "Deleted");
-                StudentService.closeModal();
-                StudentService.getAllStudents();
+                AdminService.closeModal();
+                AdminService.getAllStudents();
             },
             function (response) {
                 toastr.error(response.responseJSON?.message || "Error deleting student");
-                StudentService.closeModal();
+                AdminService.closeModal();
             }
         );
     },

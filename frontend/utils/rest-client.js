@@ -26,8 +26,8 @@ let RestClient = {
         type: method,
         beforeSend: function (xhr) {
             xhr.setRequestHeader(
-                "Authorization",
-                "Bearer " + localStorage.getItem("user_token")
+                "Authentication",
+                localStorage.getItem("user_token")
             );
             xhr.setRequestHeader("Content-Type", "application/json"); 
         },

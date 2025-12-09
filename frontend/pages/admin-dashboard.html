@@ -111,4 +111,81 @@
                 </footer>
             </div>
         </div>
+
+        <!--MODALS-->>
+
+        <!-- Modal For Updating Student Details -->
+        <div class="modal fade" id="updateStudentDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateLabel">Update Student Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editStudentForm">
+                            <input id="edit_student_id" name="id" hidden />
+                            <div class="mb-3">
+                                <label for="first_name" class="form-label">First name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="John">
+                            </div>
+                            <div class="mb-3">
+                                <label for="last_name" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Doe">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="john.doe@example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label for="faculty" class="form-label">Faculty</label>
+                                <input type="text" class="form-control" id="faculty" name="faculty" placeholder="MIT">
+                            </div>
+                            <div class="mb-3">
+                                <label for="roomNumber" class="form-label">Room number</label>
+                                <p id="room_number">----</p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="role">Role</label>
+                                <select class="form-select" id="role" name="role">
+                                    <option value="student">Student</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="active">Active</label>
+                                <select class="form-select" id="active" name="is_active">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <!-- Modal For Deleting Student Details -->
+        <div class="modal fade" id="deleteStudent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <input id="delete_student_id" name="id" hidden />
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteLabel$">Delete Student</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete <strong></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="AdminService.deleteStudent()">Delete</button>
+                </div>
+                </div>
+            </div>
+        </div> 
     </section>
