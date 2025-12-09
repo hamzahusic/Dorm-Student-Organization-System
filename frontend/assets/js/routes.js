@@ -74,9 +74,9 @@ load : "admin-dashboard.html",
     onCreate: function() { 
         Utils.removeHeader()
         sideBarToggleScript()
-        datatablesSimpleDemo()
         loadChartArea()
         loadBarChart()
+        AdminService.init();
     },
 });
 
