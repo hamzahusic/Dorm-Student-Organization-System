@@ -3,65 +3,81 @@ var app=$.spapp({
     templateDir:"./pages/"
 })
 
+$(window).on('hashchange', function() {
+    UserService.generateMenuItems();
+
+    if(window.location.hash.startsWith("#admin") || window.location.hash.startsWith("#student")){
+        Utils.removeHeader();
+    }else{
+        Utils.addHeader();
+    }
+
+    UserService.checkAuth();
+});
+
 app.route({
 view : "home",
 load : "home.html",
-onCreate: function() { 
-    bindMobileNavToggle()
-},
+    onCreate: function() { 
+        bindMobileNavToggle()
+    }
 });
 
 app.route({
 view : "about",
 load : "about.html",
-onCreate: function() { 
-    bindMobileNavToggle()
-    },
+    onCreate: function() { 
+        bindMobileNavToggle()
+    }
 });
 
 app.route({
 view : "announcements",
 load : "announcements.html",
-onCreate: function() { 
-    bindMobileNavToggle()
-    },
+    onCreate: function() { 
+        bindMobileNavToggle()
+    }
 });
 
 app.route({
 view : "announcements-details",
 load : "announcements-details.html",
-onCreate: function() { 
-    bindMobileNavToggle()
+    onCreate: function() { 
+        bindMobileNavToggle()
     },
 });
 
 app.route({
 view : "login",
 load : "login.html",
-onCreate: function() { 
-    bindMobileNavToggle()
+    onCreate: function() { 
+        bindMobileNavToggle()
     },
+    onReady: function() {
+        $('#authLoginEmail').focus();
+        UserService.init();
+    }
 });
 
 app.route({
 view : "register",
 load : "register.html",
-onCreate: function() { 
-    bindMobileNavToggle()
+    onCreate: function() { 
+        bindMobileNavToggle()
     },
 });
 
 // Admin Dashboard Routes
-
-    app.route({
-    view : "admin-dashboard",
-    load : "admin-dashboard.html",
+app.route({
+view : "admin-dashboard",
+load : "admin-dashboard.html",
     onCreate: function() { 
         sideBarToggleScript()
         datatablesSimpleDemo()
         loadChartArea()
         loadBarChart()
-        },
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -70,7 +86,8 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         roomsDataTableDemo()
-        },
+        Utils.removeHeader()
+     },
 });
 
 app.route({
@@ -79,7 +96,10 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         requestsDataTableDemo()
-        },
+
+        Utils.removeHeader()
+    },
+
 });
 
 app.route({
@@ -88,7 +108,9 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         mealsDataTableDemo()
-        },
+        Utils.removeHeader()
+    },
+
 });
 
 app.route({
@@ -97,7 +119,8 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         announcementsAdminDataTableDemo()
-        },
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -106,7 +129,8 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         loadSettings()
-        },
+        Utils.removeHeader()
+    },
 });
 
 // Student Dashboard Routes
@@ -118,7 +142,8 @@ app.route({
         sideBarToggleScript()
         studentDashboardInit()
         loadStudentMealsChart()
-        },
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -127,7 +152,8 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         studentRoomInit()
-        },
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -136,7 +162,8 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         loadStudentSettings()
-        },
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -145,7 +172,8 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         studentMealsInit()
-        },
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -154,7 +182,10 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         studentRequestsInit()
-        },
+        Utils.removeHeader()
+    },
 });
+
+UserService.generateMenuItems();
 
 app.run();
