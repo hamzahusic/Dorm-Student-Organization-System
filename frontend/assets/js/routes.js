@@ -4,14 +4,14 @@ var app=$.spapp({
 })
 
 $(window).on('hashchange', function() {
-    UserService.generateMenuItems();
-
+    
     if(window.location.hash.startsWith("#admin") || window.location.hash.startsWith("#student")){
         Utils.removeHeader();
     }else{
         Utils.addHeader();
     }
-
+    
+    UserService.generateMenuItems();
     UserService.checkAuth();
 });
 
@@ -72,11 +72,11 @@ app.route({
 view : "admin-dashboard",
 load : "admin-dashboard.html",
     onCreate: function() { 
+        Utils.removeHeader()
         sideBarToggleScript()
         datatablesSimpleDemo()
         loadChartArea()
         loadBarChart()
-        Utils.removeHeader()
     },
 });
 

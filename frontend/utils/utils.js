@@ -28,10 +28,10 @@ let Utils = {
         },
 
         removeHeader: function() {
-            document.getElementById("header").style.visibility = "hidden";
+            document.body.setAttribute('data-view-type', 'dashboard');
         },
         
         addHeader: function() {
-            document.getElementById("header").style.visibility = "visible";
+            document.body.removeAttribute('data-view-type');
         }
 }
