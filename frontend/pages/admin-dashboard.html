@@ -12,7 +12,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#admin-settings">Settings</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="UserService.logout()">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        admin@gmail.com
+                        <span id="sidenav-user-email">User not found</span>
                     </div>
                 </nav>
             </div>

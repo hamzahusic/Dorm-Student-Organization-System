@@ -7,7 +7,11 @@ let AdminDashboardService = {
                 AdminDashboardService.updateStudent(student);
             }
         });
+        
+        let user = localStorage.getItem('user_token');
+        user = Utils.parseJwt(user).user;
 
+        $("#sidenav-user-email").text(user ? user.email : "User not found");
         AdminDashboardService.getAllStudents();
         AdminDashboardService.loadChartArea();
         AdminDashboardService.loadBarChart();
