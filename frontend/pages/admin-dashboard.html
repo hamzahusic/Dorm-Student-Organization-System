@@ -178,12 +178,12 @@
                     <h1 class="modal-title fs-5" id="deleteLabel$">Delete Student</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="delete-student-body">
                     Are you sure you want to delete <strong></strong>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="AdminService.deleteStudent()">Delete</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="AdminDashboardService.deleteStudent()">Delete</button>
                 </div>
                 </div>
             </div>

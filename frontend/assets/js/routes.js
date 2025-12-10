@@ -74,10 +74,10 @@ load : "admin-dashboard.html",
     onCreate: function() { 
         Utils.removeHeader()
         sideBarToggleScript()
-        loadChartArea()
-        loadBarChart()
-        AdminService.init();
     },
+    onReady: function() {
+        AdminDashboardService.init();
+    }
 });
 
 app.route({
