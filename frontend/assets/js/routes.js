@@ -140,7 +140,6 @@ app.route({
 });
 
 // Student Dashboard Routes
-
 app.route({
     view : "student-dashboard",
     load : "student-dashboard.html",
@@ -167,7 +166,7 @@ app.route({
     load : "student-settings.html",
     onCreate: function() { 
         sideBarToggleScript()
-        loadStudentSettings()
+        ProfileSettingsService.init("student");
         Utils.removeHeader()
     },
 });

@@ -19,7 +19,9 @@ let ProfileSettingsService = {
     getUserById: function (id, user_type) {
         $.blockUI({ message: '<h3>Loading...</h3>' });
 
-        RestClient.get("users/" + id, function (data) {
+        let route = user_type === Constants.ADMIN_ROLE ? "users/" + id : "users";
+
+        RestClient.get(route, function (data) {
             $(`#${user_type}FirstName`).val(data.first_name);
             $(`#${user_type}LastName`).val(data.last_name);
             $(`#${user_type}Email`).val(data.email);
@@ -27,7 +29,6 @@ let ProfileSettingsService = {
             $(`#${user_type}Year`).val(data.year);
             $(`#${user_type}Phone`).val(data.phone);
             $(`#${user_type}JoinedAt`).text(new Date(data.created_at).toLocaleDateString());
-
 
             $.unblockUI();
         }, function () {
