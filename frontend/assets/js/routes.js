@@ -98,7 +98,6 @@ app.route({
     onCreate: function() { 
         sideBarToggleScript()
         requestsDataTableDemo()
-
         Utils.removeHeader()
     },
 
@@ -109,9 +108,11 @@ app.route({
     load : "admin-meals.html",
     onCreate: function() { 
         sideBarToggleScript()
-        mealsDataTableDemo()
         Utils.removeHeader()
     },
+    onReady: function() {
+        AdminMealService.init();
+    }
 
 });
 
