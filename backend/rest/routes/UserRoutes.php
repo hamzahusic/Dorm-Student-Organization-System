@@ -91,7 +91,7 @@ Flight::route('GET /users/@id', function($id){
     $user_info = Flight::userService()->get_by_id($id);
 
     if(!$user_info){
-        Flight::halt(403,"User not found");
+        Flight::halt(404,"User not found");
     }
 
     unset($user_info['password']);

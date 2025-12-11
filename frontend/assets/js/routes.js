@@ -134,8 +134,8 @@ app.route({
     load : "admin-settings.html",
     onCreate: function() { 
         sideBarToggleScript()
-        loadSettings()
         Utils.removeHeader()
+        ProfileAdminSettingsService.init();
     },
 });
 
