@@ -3,6 +3,7 @@ let StudentDashboardService = {
     init: function () {
         let user = localStorage.getItem('user_token');
         user = Utils.parseJwt(user).user;
+        $("#student-dashboard-sidenav-user-email").text(user ? user.email : "User not found");
         StudentDashboardService.getRoomInformation(user.room_id);
         StudentDashboardService.getTodaysMeals();
         StudentDashboardService.getTakenMeals();
