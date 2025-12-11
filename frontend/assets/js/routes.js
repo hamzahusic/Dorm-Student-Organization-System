@@ -121,9 +121,11 @@ app.route({
     load : "admin-announcements.html",
     onCreate: function() { 
         sideBarToggleScript()
-        announcementsAdminDataTableDemo()
         Utils.removeHeader()
     },
+    onReady: function() {
+        AdminAnnouncementService.init();
+    }
 });
 
 app.route({

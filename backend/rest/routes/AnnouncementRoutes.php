@@ -104,6 +104,7 @@ Flight::route('POST /announcement', function(){
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
 
     $data = Flight::request()->data->getData();
+    $data['user_id']=Flight::get('user')->id;
     $result = Flight::announcementService()->add($data);
 
     Flight::json($result);
