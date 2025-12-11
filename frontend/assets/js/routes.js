@@ -145,8 +145,7 @@ app.route({
     load : "student-dashboard.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentDashboardInit()
-        loadStudentMealsChart()
+        StudentDashboardService.init()
         Utils.removeHeader()
     },
 });
