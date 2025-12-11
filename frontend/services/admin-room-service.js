@@ -99,9 +99,21 @@ let AdminRoomService = {
     },
 
     openDeleteModal: function (id, name) {
-        $("#deleteStudent").modal("show");
-        $("#delete_student_id").val(id);
-        $("#delete-student-body").html("Do you want to delete student: <b>" + name + "</b> ?");
+        $("#deleteRoomModal").modal("show");
+        $("#delete-room-head").text(name);
+        $("#deleteRoomId").val(id);
+        $("#delete-room-body").empty();
+
+        RestClient.get("room/info/" + id, function (data) {
+            data.students?.length > 0 ? 
+            $("#delete-room-body").append(
+                `<div class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    This room has ${data.students.length} student(s) assigned (${data.students.map((s) => s.name)}). Deleting this room will unassign them.
+                </div>`
+            ) : "";
+        });
+
     },
 
     addRoom: function (student) {
@@ -152,18 +164,18 @@ let AdminRoomService = {
 
         document.activeElement.blur();
 
-        let id = $("#delete_student_id").val();
+        let id = $("#deleteRoomId").val();
 
         RestClient.delete(
-            "users/" + id,
+            "room/" + id,
             null,
             function (response) {
                 toastr.success(response.message || "Deleted");
                 AdminRoomService.closeModal();
-                AdminRoomService.getAllStudents();
+                AdminRoomService.getAllRooms();
             },
             function (response) {
-                toastr.error(response.responseJSON?.message || "Error deleting student");
+                toastr.error(response.responseJSON?.message || "Error deleting room");
                 AdminRoomService.closeModal();
             }
         );
