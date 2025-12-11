@@ -19,7 +19,6 @@ var UserService = {
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
-            console.log(result);
             localStorage.setItem("user_token", result.data.token);
             window.location.replace("#home");
             },

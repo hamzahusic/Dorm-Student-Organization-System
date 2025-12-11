@@ -1,32 +1,32 @@
-let ProfileAdminSettingsService = {
+let ProfileSettingsService = {
 
-    init: function () {
-        $("#AdminSettingsForm").validate({
+    init: function (user_type) {
+        $(`#${user_type}SettingsForm`).validate({
             submitHandler: function (form) {
                 let userInfo = Object.fromEntries(new FormData(form).entries());
                 userInfo.id = Utils.parseJwt(localStorage.getItem('user_token')).user.id;
-                ProfileAdminSettingsService.updateUser(userInfo);
+                ProfileSettingsService.updateUser(userInfo);
             }
         });
 
         let user = localStorage.getItem('user_token');
         user = Utils.parseJwt(user);
 
-        $("#settings-sidenav-user-email").text(user.user ? user.user.email : "User not found");
-        ProfileAdminSettingsService.getUserById(user.user.id);
+        $(`#${user_type}-settings-sidenav-user-email`).text(user.user ? user.user.email : "User not found");
+        ProfileSettingsService.getUserById(user.user.id, user_type);
     },
 
-    getUserById: function (id) {
+    getUserById: function (id, user_type) {
         $.blockUI({ message: '<h3>Loading...</h3>' });
 
         RestClient.get("users/" + id, function (data) {
-            $("#adminFirstName").val(data.first_name);
-            $("#adminLastName").val(data.last_name);
-            $("#adminEmail").val(data.email);
-            $("#adminFaculty").val(data.faculty);
-            $("#adminYear").val(data.year);
-            $("#adminPhone").val(data.phone);
-            $("#adminJoinedAt").text(new Date(data.created_at).toLocaleDateString());
+            $(`#${user_type}FirstName`).val(data.first_name);
+            $(`#${user_type}LastName`).val(data.last_name);
+            $(`#${user_type}Email`).val(data.email);
+            $(`#${user_type}Faculty`).val(data.faculty);
+            $(`#${user_type}Year`).val(data.year);
+            $(`#${user_type}Phone`).val(data.phone);
+            $(`#${user_type}JoinedAt`).text(new Date(data.created_at).toLocaleDateString());
 
 
             $.unblockUI();
