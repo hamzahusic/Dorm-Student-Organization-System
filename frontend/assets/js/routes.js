@@ -97,10 +97,11 @@ app.route({
     load : "admin-requests.html",
     onCreate: function() { 
         sideBarToggleScript()
-        requestsDataTableDemo()
         Utils.removeHeader()
     },
-
+    onReady: function() {
+        AdminRequestService.init();
+    }
 });
 
 app.route({

@@ -46,10 +46,10 @@ require_once __DIR__ . "/BaseDao.php";
 
             if($user_id !== null){
                 $query = $query . " AND r.user_id = :user_id";
-                return $this->query($query,['id' => $id, 'user_id' => $user_id]);
+                return $this->query_unique($query,['id' => $id, 'user_id' => $user_id]);
             }
 
-            return $this->query($query,['id' => $id]);
+            return $this->query_unique($query,['id' => $id]);
         }
 
     }
