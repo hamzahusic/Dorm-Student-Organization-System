@@ -26,16 +26,15 @@ require_once __DIR__ . "/BaseDao.php";
 
         public function get_all_rooms(){
             return $this->query("
-                SELECT 
-                    r.id as room_number,
-                    r.capacity,
-                    r.floor as floor_number,
-                    COUNT(*) as student_count,
-                    GROUP_CONCAT(CONCAT(u.first_name,' ',u.last_name) SEPARATOR ', ') as assigned_students
-                FROM users u
-                JOIN rooms r on u.room_id = r.id
-                WHERE u.is_active = true
-                GROUP BY r.id;
+                SELECT
+				    r.id as room_number,
+				    r.capacity,
+				    r.floor as floor_number,
+				    COUNT(u.id) as student_count,
+				    GROUP_CONCAT(CONCAT(u.first_name,' ',u.last_name) SEPARATOR ', ') as assigned_students
+				FROM rooms r
+				LEFT JOIN users u ON u.room_id = r.id AND u.is_active = true
+				GROUP BY r.id;
             ",[]);
         }
 

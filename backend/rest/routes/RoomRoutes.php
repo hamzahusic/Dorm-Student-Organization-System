@@ -145,6 +145,12 @@ Flight::route('POST /room', function(){
  *                 description="Room ID"
  *             ),
  *             @OA\Property(
+ *                 property="original_id",
+ *                 type="integer",
+ *                 example=113,
+ *                 description="Original Room ID (If room id is changing)"
+ *             ),
+ *             @OA\Property(
  *                 property="capacity",
  *                 type="integer",
  *                 example=2,
@@ -186,18 +192,19 @@ Flight::route('PUT /room', function(){
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     $room_id = $data['id'];
-    $room_info = Flight::roomService()->get_by_id($room_id);
+    $original_room_id = $data['original_id'];
+    $room_info = Flight::roomService()->get_by_id($original_room_id);
     $students = $data['students_ids'];
-    
+
     if(!$room_info){
-        Flight::halt(404,"Room doesn't exist");
+        Flight::halt(404, "Room doesn't exist");
     }
     
     if(count($students) > $room_info['capacity'] && count($students) > $data['capacity']){
         Flight::halt(404,"Room capacity exceeded");
     }
     
-    $room_assignees = Flight::roomService()->get_room_information($room_id);
+    $room_assignees = Flight::roomService()->get_room_information($original_room_id);
 
     foreach($room_assignees as $assignee){
         Flight::userService()->update(
@@ -207,9 +214,21 @@ Flight::route('PUT /room', function(){
             $assignee['student_id']
         );
     }
-    
-    unset($data['students_ids']);
-    $result = Flight::roomService()->update($data,$room_id);
+
+    if($room_id != $original_room_id){
+        $result = Flight::roomService()->add([
+            'id' => $room_id,
+            'capacity' => $data['capacity'],
+            'floor' => $data['floor']
+        ]);
+        
+        Flight::roomService()->delete($original_room_id);
+    } else {
+        unset($data['id']);
+        unset($data['students_ids']);
+        unset($data['original_id']);
+        $result = Flight::roomService()->update($data, $original_room_id);
+    }
 
     foreach($students as $student_id){
         Flight::userService()->update(

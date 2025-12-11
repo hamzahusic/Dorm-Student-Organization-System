@@ -85,9 +85,11 @@ app.route({
     load : "admin-rooms.html",
     onCreate: function() { 
         sideBarToggleScript()
-        roomsDataTableDemo()
         Utils.removeHeader()
      },
+    onReady: function() {
+        AdminRoomService.init();
+    }
 });
 
 app.route({
