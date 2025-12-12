@@ -155,7 +155,7 @@ app.route({
     load : "student-room.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentRoomInit()
+        StudentRoomService.init()
         Utils.removeHeader()
     },
 });

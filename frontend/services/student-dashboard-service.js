@@ -10,6 +10,7 @@ let StudentDashboardService = {
     },
 
     getRoomInformation: function (id) {
+        $(`#noRoomAssignedSecond`).hide();
         RestClient.get("room/info/" + id, function (data) {
             $("#studentRoomNumber").text(data.id);
             $("#studentFloor").text(data.floor);
@@ -17,6 +18,7 @@ let StudentDashboardService = {
         }, function (){
             $.unblockUI();
             toastr.error("Cannot load room information");
+            $(`#noRoomAssignedSecond`).show();
         });
     },
 
