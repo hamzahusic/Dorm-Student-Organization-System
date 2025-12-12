@@ -40,7 +40,7 @@ let StudentDashboardService = {
                     )
                 });
             }else{
-                $("#todayMealsContainer").text("There is no meals created for today")
+                $("#todayMealsContainer").text("No meals have been created for today.")
             }
 
         }, function (){
