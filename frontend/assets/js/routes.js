@@ -185,9 +185,11 @@ app.route({
     load : "student-requests.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentRequestsInit()
         Utils.removeHeader()
     },
+    onReady: function(){
+        StudentRequestService.init()
+    }
 });
 
 UserService.generateMenuItems();
