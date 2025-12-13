@@ -36,6 +36,7 @@ view : "announcements",
 load : "announcements.html",
     onCreate: function() { 
         bindMobileNavToggle()
+        AnnouncementService.init()
     }
 });
 
@@ -45,6 +46,9 @@ load : "announcements-details.html",
     onCreate: function() { 
         bindMobileNavToggle()
     },
+    onReady: function(){
+        AnnouncementService.getAnnouncement()
+    }
 });
 
 app.route({
