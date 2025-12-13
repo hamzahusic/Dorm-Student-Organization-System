@@ -149,7 +149,7 @@ Flight::route('POST /student/meals', function(){
    $response = Flight::mealService()->take_meal($user->id,$data['meal_id']);
 
    if($response['success']){
-      Flight::json($response);
+      Flight::json($response['data']);
    }else{
       Flight::halt(404, $response['error']);
    }

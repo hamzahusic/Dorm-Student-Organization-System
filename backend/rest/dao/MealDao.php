@@ -56,14 +56,23 @@ require_once __DIR__ . "/BaseDao.php";
         }
 
         public function take_meal($user_id, $meal_id){
-            return $this->query("INSERT INTO user_meals (user_id, meal_id) VALUES (:user_id, :meal_id);", 
-            ['user_id' => $user_id, 'meal_id' => $meal_id]);
+            $query = "INSERT INTO user_meals (user_id, meal_id) VALUES (:user_id, :meal_id);";
+            $stmt = $this->connection->prepare($query);
+            $stmt->bindValue(':user_id', $user_id); 
+            $stmt->bindValue(':meal_id', $meal_id); 
+            $stmt->execute();
+            
+            return [
+                'user_meal_id' => $this->connection->lastInsertId(),
+                'user_id' => $user_id,
+                'meal_id' => $meal_id
+            ];
         }
 
         public function delete_taken_meal($user_meal_id){
-            return $this->query_unique(
-                "DELETE FROM user_meals WHERE id = :id"
-            ,["id" => $user_meal_id]);
+            $stmt = $this->connection->prepare("DELETE FROM user_meals WHERE id = :id");
+            $stmt->bindValue(':id', $user_meal_id); 
+            return $stmt->execute();
         }
 
     }

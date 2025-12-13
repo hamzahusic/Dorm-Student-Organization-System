@@ -88,7 +88,12 @@ class MealService extends BaseService {
     }
 
     public function delete_taken_meal($user_meal_id){
-        return $this->dao->delete_taken_meal($user_meal_id);
+        $result = $this->dao->delete_taken_meal($user_meal_id);
+        
+        return [
+            'success' => $result,
+            'message' => $result ? 'Meal removed successfully' : 'Failed to remove meal'
+        ];
     }
 
 }

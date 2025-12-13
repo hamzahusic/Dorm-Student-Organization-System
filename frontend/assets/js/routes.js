@@ -175,7 +175,7 @@ app.route({
     load : "student-meals.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentMealsInit()
+        StudentMealService.init()
         Utils.removeHeader()
     },
 });
