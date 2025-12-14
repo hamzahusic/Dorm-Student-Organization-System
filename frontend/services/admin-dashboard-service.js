@@ -20,7 +20,7 @@ let AdminDashboardService = {
     getAllStudents: function () {
         RestClient.get("users", function (data) {
             Utils.datatable("students-table", [
-                { data: 'id', title: 'Name' },
+                { data: 'id', title: 'ID' },
                 { data: 'first_name', title: 'First Name' },
                 { data: 'last_name', title: 'Last Name' },
                 { data: 'email', title: 'Email' },
