@@ -163,9 +163,11 @@ app.route({
     load : "student-room.html",
     onCreate: function() { 
         sideBarToggleScript()
-        StudentRoomService.init()
         Utils.removeHeader()
     },
+    onReady: function(){
+        StudentRoomService.init()
+    }
 });
 
 app.route({
@@ -173,9 +175,11 @@ app.route({
     load : "student-settings.html",
     onCreate: function() { 
         sideBarToggleScript()
-        ProfileSettingsService.init("student");
         Utils.removeHeader()
     },
+    onReady: function(){
+        ProfileSettingsService.init("student");
+    }
 });
 
 app.route({
@@ -183,9 +187,11 @@ app.route({
     load : "student-meals.html",
     onCreate: function() { 
         sideBarToggleScript()
-        StudentMealService.init()
         Utils.removeHeader()
     },
+    onReady: function(){
+        StudentMealService.init()
+    }
 });
 
 app.route({

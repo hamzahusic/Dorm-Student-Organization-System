@@ -37,7 +37,7 @@ CREATE TABLE `announcements` (
   PRIMARY KEY (`id`),
   KEY `announcements_users_FK` (`user_id`),
   CONSTRAINT `announcements_users_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `announcements` (
 
 LOCK TABLES `announcements` WRITE;
 /*!40000 ALTER TABLE `announcements` DISABLE KEYS */;
-INSERT INTO `announcements` VALUES (1,'Welcome to Student Dormitory 2024/2025','Dear students, welcome to the new academic year! We are excited to have you with us. Please make sure to familiarize yourself with the dormitory rules and regulations. The welcome orientation will be held on October 28th at 6 PM in the main hall. Attendance is mandatory for all new residents.',1,'2025-10-24 23:40:58','https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500'),(2,'Internet Maintenance Schedule','Please be advised that scheduled maintenance will be performed on the dormitory internet network on Saturday, October 26th from 2 AM to 6 AM. During this time, internet services will be unavailable. We apologize for any inconvenience this may cause. If you have any urgent matters, please plan accordingly.',1,'2025-10-24 23:40:58','https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500');
+INSERT INTO `announcements` VALUES (1,'Welcome to Student Dormitory 2024/2025','Dear students, welcome to the new academic year! We are excited to have you with us. Please make sure to familiarize yourself with the dormitory rules and regulations. The welcome orientation will be held on October 28th at 6 PM in the main hall. Attendance is mandatory for all new residents.',1,'2025-10-24 23:40:58','https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500'),(2,'Internet Maintenance Schedule!','Please be advised that scheduled maintenance will be performed on the dormitory internet network on Saturday, October 26th from 2 AM to 6 AM. During this time, internet services will be unavailable. We apologize for any inconvenience this may cause. If you have any urgent matters, please plan accordingly.',1,'2025-10-24 23:40:58','https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500'),(3,'Maintenance Notice','Water will be shut off tomorrow from 9 AM to 12 PM',1,'2025-11-19 15:42:45','https://images.unsplash.com/photo-1526779259212-939e64788e3c?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 /*!40000 ALTER TABLE `announcements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +65,7 @@ CREATE TABLE `meals` (
   `description` varchar(200) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `meals` (
 
 LOCK TABLES `meals` WRITE;
 /*!40000 ALTER TABLE `meals` DISABLE KEYS */;
-INSERT INTO `meals` VALUES (1,'2025-11-04','breakfast','Continental Breakfast','Fresh bread, butter, jam, cheese, ham, boiled eggs, yogurt, orange juice, coffee and tea','2025-10-24 23:40:58'),(2,'2025-11-04','lunch','Chicken Schnitzel with Mashed Potatoes','Breaded chicken cutlet served with creamy mashed potatoes, fresh salad, and tartar sauce','2025-10-24 23:40:58'),(3,'2025-11-04','dinner','Beef Goulash with Rice','Traditional slow-cooked beef stew with peppers and onions, served with white rice and cucumber salad','2025-10-24 23:40:58'),(4,'2025-11-05','breakfast','American Breakfast','Scrambled eggs, bacon, sausages, baked beans, toast, butter, fresh fruit, orange juice, coffee and tea','2025-10-24 23:40:58'),(5,'2025-11-05','lunch','Grilled Fish with Vegetables','Grilled sea bass fillet with roasted seasonal vegetables, lemon wedge, and herb butter','2025-10-24 23:40:58'),(6,'2025-11-05','dinner','Pasta Bolognese','Spaghetti with homemade meat sauce, parmesan cheese, and garlic bread on the side','2025-10-24 23:40:58'),(8,'2025-11-08','dinner','Chicken with potatos','Chicken with potatos and dessert','2025-11-08 16:32:47');
+INSERT INTO `meals` VALUES (1,'2025-12-13','breakfast','Continental Breakfast','Fresh bread, butter, jam, cheese, ham, boiled eggs, yogurt, orange juice, coffee and tea','2025-12-12 23:40:58'),(2,'2025-12-13','lunch','Chicken Schnitzel with Mashed Potatoes','Breaded chicken cutlet served with creamy mashed potatoes, fresh salad, and tartar sauce','2025-12-12 23:40:58'),(3,'2025-12-13','dinner','Beef Goulash with Rice','Traditional slow-cooked beef stew with peppers and onions, served with white rice and cucumber salad','2025-12-12 23:40:58'),(4,'2025-11-12','lunch','American Breakfast','Scrambled eggs, bacon, sausages, baked beans, toast, butter, fresh fruit, orange juice, coffee and tea','2025-10-24 23:40:58'),(5,'2025-11-05','lunch','Grilled Fish with Vegetables','Grilled sea bass fillet with roasted seasonal vegetables, lemon wedge, and herb butter','2025-10-24 23:40:58'),(6,'2025-11-05','dinner','Pasta Bolognese','Spaghetti with homemade meat sauce, parmesan cheese, and garlic bread on the side','2025-10-24 23:40:58'),(8,'2025-11-08','dinner','Chicken with potatos','Chicken with potatos and dessert','2025-11-08 16:32:47');
 /*!40000 ALTER TABLE `meals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `requests` (
   PRIMARY KEY (`id`),
   KEY `requests_users_FK` (`user_id`),
   CONSTRAINT `requests_users_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `requests` (
 
 LOCK TABLES `requests` WRITE;
 /*!40000 ALTER TABLE `requests` DISABLE KEYS */;
-INSERT INTO `requests` VALUES (1,2,'Broken Window in Room 101','The window in my room does not close properly. There is a draft coming through and it gets very cold at night. Could someone please come and fix it as soon as possible?','resolved','2025-10-24 23:40:58'),(2,2,'Heating Not Working','The radiator in room 115 is not heating up. I have tried adjusting the valve but nothing happens. The room temperature is very low. Please send maintenance to check it.','in_progress','2025-10-24 23:40:58'),(3,2,'Leaking Faucet in Bathroom','The bathroom sink faucet has been dripping constantly. It is wasting water and making noise at night. Can this be repaired?','resolved','2025-10-24 23:40:58'),(4,1,'Urgent window fix','Broken window in room 101','in_progress','2025-11-06 11:52:58');
+INSERT INTO `requests` VALUES (2,8,'Heating Not Working','The radiator in room 115 is not heating up. I have tried adjusting the valve but nothing happens. The room temperature is very low. Please send maintenance to check it. HELP','in_progress','2025-10-24 23:40:58'),(3,2,'Leaking Faucet in Bathroom','The bathroom sink faucet has been dripping constantly. It is wasting water and making noise at night. Can this be repaired?','resolved','2025-10-24 23:40:58');
 /*!40000 ALTER TABLE `requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +121,7 @@ CREATE TABLE `rooms` (
   `floor` int unsigned NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `rooms` (
 
 LOCK TABLES `rooms` WRITE;
 /*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-INSERT INTO `rooms` VALUES (110,3,1,'2025-10-24 23:40:58'),(115,2,1,'2025-10-24 23:40:58'),(202,3,2,'2025-10-24 23:40:58');
+INSERT INTO `rooms` VALUES (111,3,2,'2025-12-11 09:44:28'),(112,2,2,'2025-12-11 09:44:11'),(114,3,1,'2025-12-11 00:11:28'),(115,3,1,'2025-10-24 23:40:58');
 /*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `user_meals` (
   KEY `user_meals_meals_FK` (`meal_id`),
   CONSTRAINT `user_meals_meals_FK` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_meals_users_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +160,7 @@ CREATE TABLE `user_meals` (
 
 LOCK TABLES `user_meals` WRITE;
 /*!40000 ALTER TABLE `user_meals` DISABLE KEYS */;
-INSERT INTO `user_meals` VALUES (1,2,1,'2025-11-04 21:52:07'),(2,2,2,'2025-11-04 21:52:07'),(3,2,3,'2025-11-04 21:52:07'),(4,2,4,'2025-11-04 21:52:07'),(5,2,5,'2025-11-04 21:52:07'),(6,2,6,'2025-11-04 21:52:07'),(18,2,8,'2025-11-08 17:05:09');
+INSERT INTO `user_meals` VALUES (4,2,4,'2025-11-04 21:52:07'),(5,2,5,'2025-11-04 21:52:07'),(6,2,6,'2025-11-04 21:52:07'),(18,2,8,'2025-11-08 17:05:09'),(21,8,3,'2025-12-13 13:37:53'),(24,8,2,'2025-12-13 00:44:53'),(47,8,1,'2025-12-13 01:48:43');
 /*!40000 ALTER TABLE `user_meals` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +187,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `users_rooms_FK` (`room_id`),
   CONSTRAINT `users_rooms_FK` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +196,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'John','Anderson','admin@university.edu','1231231','admin',NULL,'2025-10-24 23:40:58',1,NULL,NULL,'+387-61-123-4567'),(2,'Amina','Ković','amina.kovic@student.edu','213123131','student',115,'2025-10-24 23:40:58',1,'Faculty of Engineering',2,'+387-62-234-5678'),(4,'Sara','Begić','sara.begic@student.edu','12312312312312312','student',110,'2025-10-24 23:40:58',1,'Faculty of Medicine',1,'+387-64-456-7890'),(5,'Nedim','Ramić','nedim.ramic@student.edu','213123123123','student',110,'2025-10-24 23:40:58',1,'Faculty of Law',4,'+387-65-567-8901');
+INSERT INTO `users` VALUES (1,'Mirza','Mirzic','mirza@university.edu','$2y$10$RfkcW5P5acKmDfcagOdsIOKn1bYNkr3JJCOvV75kdYzktBxDoOm1G','student',NULL,'2025-10-24 23:40:58',1,'MIT',NULL,'+387-61-123-4567'),(2,'Amina','Ković','amina.kovic@student.edu','$2y$10$RfkcW5P5acKmDfcagOdsIOKn1bYNkr3JJCOvV75kdYzktBxDoOm1G','student',115,'2025-10-24 23:40:58',1,'Faculty of Engineering',2,'+387-62-234-5678'),(4,'Sara','Begić','sara.begic@student.edu','$2y$10$RfkcW5P5acKmDfcagOdsIOKn1bYNkr3JJCOvV75kdYzktBxDoOm1G','student',115,'2025-10-24 23:40:58',1,'Faculty of Medicine',1,'+387-64-456-7890'),(5,'John','Doe','john.doe@gmail.com','$2y$10$RfkcW5P5acKmDfcagOdsIOKn1bYNkr3JJCOvV75kdYzktBxDoOm1G','student',112,'2025-10-24 23:40:58',1,'Engineering',4,'+387-65-567-8901'),(8,'Hamza','Husic','hamza@gmail.com','$2y$10$RfkcW5P5acKmDfcagOdsIOKn1bYNkr3JJCOvV75kdYzktBxDoOm1G','admin',NULL,'2025-11-19 00:07:49',1,'MIT',2,'+387 225 883'),(10,'Test','Testovic','test1@gmail.com','$2y$10$Lc9TAGCiIl71j7E7wTFhuOH8mUmj9cKzOCGQpP/ES7JUByhJzTOjG','student',111,'2025-12-16 15:22:59',1,'MIT',1,'+387 225 883'),(11,'Test2','Testovic','test2@gmail.com','$2y$10$/pYta27P2lfavI9VczrpNO3TYKqtk71VdVO6MGb3MxN9cmJNZpALa','student',NULL,'2025-12-16 16:29:48',0,'MIT',1,'+387 61 123 456');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,4 +213,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-08 17:08:06
+-- Dump completed on 2025-12-16 18:02:42
