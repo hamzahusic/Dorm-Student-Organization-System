@@ -2,6 +2,16 @@ let AdminRequestService = {
 
     init: function () {
         $("#updateStatusForm").validate({
+            rules: {
+                status: {
+                    required: true
+                }
+            },
+            messages: {
+                status: {
+                    required: "Please enter request status",
+                }
+            },
             submitHandler: function (form) {
                 let data = Object.fromEntries(new FormData(form).entries());
                 AdminRequestService.updateRequestStatus(data);
