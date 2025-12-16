@@ -2,6 +2,47 @@ let AdminDashboardService = {
 
     init: function () {
         $("#editStudentForm").validate({
+            rules: {
+                first_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                faculty: {
+                    required: false,
+                    minlength: 2,
+                    maxlength: 100
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "Please enter a first name",
+                    minlength: "First name must be at least 2 characters long",
+                    maxlength: "First name cannot exceed 50 characters"
+                },
+                last_name: {
+                    required: "Please enter a last name",
+                    minlength: "Last name must be at least 2 characters long",
+                    maxlength: "Last name cannot exceed 50 characters"
+                },
+                email: {
+                    required: "Please enter an email address",
+                    email: "Please enter a valid email address"
+                },
+                faculty: {
+                    minlength: "Faculty must be at least 2 characters long",
+                    maxlength: "Faculty cannot exceed 100 characters"
+                }
+            },
             submitHandler: function (form) {
                 let student = Object.fromEntries(new FormData(form).entries());
                 AdminDashboardService.updateStudent(student);
