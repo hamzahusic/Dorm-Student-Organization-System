@@ -5,6 +5,20 @@ var UserService = {
             window.location.replace("#home");
         }
         $("#authLoginForm").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 8
+                }
+            },
+            messages: {
+                email: "Please enter a valid email address",
+                password: "Minimum 8 characters"
+            },
             submitHandler: function (form) {
                 var entity = Object.fromEntries(new FormData(form).entries());
                 UserService.login(entity);
@@ -12,12 +26,37 @@ var UserService = {
         });
 
         $("#authRegisterForm").validate({
+            rules: {
+                first_name: {
+                    required: true,
+                    minlength: 2
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 8
+                }
+            },
+            messages: {
+                first_name: "Please enter your first name (Minimum 2 characters)",
+                last_name: "Please enter your last name (Minimum 2 characters)",
+                email: "Please enter a valid email address",
+                password: "Minimum 8 characters"
+            },
             submitHandler: function (form) {
                 var entity = Object.fromEntries(new FormData(form).entries());
                 UserService.register(entity);
             },
         });
     },
+
     login: function (entity) {
         $.ajax({
             url: Constants.PROJECT_BASE_URL + "auth/login",
