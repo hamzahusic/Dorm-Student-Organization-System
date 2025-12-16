@@ -2,6 +2,28 @@ let AdminRoomService = {
 
     init: function () {
         $("#addRoomForm").validate({
+            rules: {
+                id: {
+                    required: true,
+                },
+                capacity: {
+                    required: true,
+                },
+                floor: {
+                    required: true,
+                },
+            },
+            messages: {
+                id: {
+                    required: "Please enter a room number",
+                },
+                capacity: {
+                    required: "Please enter a capacity",
+                },
+                floor: {
+                    required: "Please enter a floor number",
+                },
+            },
             submitHandler: function (form) {
                 let room = Object.fromEntries(new FormData(form).entries());
                 AdminRoomService.addRoom(room);
@@ -9,6 +31,37 @@ let AdminRoomService = {
         });
 
         $("#updateRoomForm").validate({
+            rules: {
+                original_id: {
+                    required: true,
+                },
+                id: {
+                    required: true,
+                },
+                capacity: {
+                    required: true,
+                },
+                floor: {
+                    required: true,
+                },
+                students_ids: {
+                    required: false,
+                },
+            },
+            messages: {
+                original_id: {
+                    required: "Original room ID is missing",
+                },
+                id: {
+                    required: "Please enter a room number",
+                },
+                capacity: {
+                    required: "Please enter a capacity",
+                },
+                floor: {
+                    required: "Please enter a floor number",
+                },
+            },
             submitHandler: function (form) {
                 let formData = new FormData(form);
                 let data = Object.fromEntries(formData.entries());
@@ -170,7 +223,7 @@ let AdminRoomService = {
             "room/" + id,
             null,
             function (response) {
-                toastr.success(response.message || "Deleted");
+                toastr.success(response.message || "Deleted room successfully");
                 AdminRoomService.closeModal();
                 AdminRoomService.getAllRooms();
             },
