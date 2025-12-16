@@ -6,8 +6,15 @@ var UserService = {
         }
         $("#authLoginForm").validate({
             submitHandler: function (form) {
-            var entity = Object.fromEntries(new FormData(form).entries());
-            UserService.login(entity);
+                var entity = Object.fromEntries(new FormData(form).entries());
+                UserService.login(entity);
+            },
+        });
+
+        $("#authRegisterForm").validate({
+            submitHandler: function (form) {
+                var entity = Object.fromEntries(new FormData(form).entries());
+                UserService.register(entity);
             },
         });
     },
@@ -19,11 +26,28 @@ var UserService = {
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
-            localStorage.setItem("user_token", result.data.token);
-            window.location.replace("#home");
+                localStorage.setItem("user_token", result.data.token);
+                window.location.replace("#home");
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             toastr.error(XMLHttpRequest?.responseText ?  XMLHttpRequest.responseText : 'Error');
+            },
+        });
+    },
+
+    register: function (entity) {
+        $.ajax({
+            url: Constants.PROJECT_BASE_URL + "auth/register",
+            type: "POST",
+            data: JSON.stringify(entity),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                toastr.success("Registration successful. Please login.");
+                window.location.replace("#login");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest?.responseText ?  XMLHttpRequest.responseText : 'Error');
             },
         });
     },

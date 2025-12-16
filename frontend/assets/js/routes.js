@@ -69,6 +69,10 @@ load : "register.html",
     onCreate: function() { 
         bindMobileNavToggle()
     },
+    onReady: function() {
+        $('#authRegisterFirstName').focus();
+        UserService.init();
+    }
 });
 
 // Admin Dashboard Routes
