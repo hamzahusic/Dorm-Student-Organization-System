@@ -3,65 +3,85 @@ var app=$.spapp({
     templateDir:"./pages/"
 })
 
+$(window).on('hashchange', function() {
+    
+    if(window.location.hash.startsWith("#admin") || window.location.hash.startsWith("#student")){
+        Utils.removeHeader();
+    }else{
+        Utils.addHeader();
+    }
+    
+    UserService.generateMenuItems();
+    UserService.checkAuth();
+});
+
 app.route({
 view : "home",
 load : "home.html",
-onCreate: function() { 
-    bindMobileNavToggle()
-},
+    onCreate: function() { 
+        bindMobileNavToggle()
+    }
 });
 
 app.route({
 view : "about",
 load : "about.html",
-onCreate: function() { 
-    bindMobileNavToggle()
-    },
+    onCreate: function() { 
+        bindMobileNavToggle()
+    }
 });
 
 app.route({
 view : "announcements",
 load : "announcements.html",
-onCreate: function() { 
-    bindMobileNavToggle()
-    },
+    onCreate: function() { 
+        bindMobileNavToggle()
+        AnnouncementService.init()
+    }
 });
 
 app.route({
 view : "announcements-details",
 load : "announcements-details.html",
-onCreate: function() { 
-    bindMobileNavToggle()
+    onCreate: function() { 
+        bindMobileNavToggle()
     },
+    onReady: function(){
+        AnnouncementService.getAnnouncement()
+    }
 });
 
 app.route({
 view : "login",
 load : "login.html",
-onCreate: function() { 
-    bindMobileNavToggle()
+    onCreate: function() { 
+        bindMobileNavToggle()
     },
+    onReady: function() {
+        $('#authLoginEmail').focus();
+        UserService.init();
+    }
 });
 
 app.route({
 view : "register",
 load : "register.html",
-onCreate: function() { 
-    bindMobileNavToggle()
+    onCreate: function() { 
+        bindMobileNavToggle()
     },
 });
 
 // Admin Dashboard Routes
-
-    app.route({
-    view : "admin-dashboard",
-    load : "admin-dashboard.html",
+app.route({
+view : "admin-dashboard",
+load : "admin-dashboard.html",
     onCreate: function() { 
+        Utils.removeHeader()
         sideBarToggleScript()
-        datatablesSimpleDemo()
-        loadChartArea()
-        loadBarChart()
-        },
+    },
+    onReady: function() {
+        AdminDashboardService.init();
+    }
 });
 
 app.route({
@@ -69,8 +89,11 @@ app.route({
     load : "admin-rooms.html",
     onCreate: function() { 
         sideBarToggleScript()
-        roomsDataTableDemo()
-        },
+        Utils.removeHeader()
+     },
+    onReady: function() {
+        AdminRoomService.init();
+    }
 });
 
 app.route({
@@ -78,8 +101,11 @@ app.route({
     load : "admin-requests.html",
     onCreate: function() { 
         sideBarToggleScript()
-        requestsDataTableDemo()
-        },
+        Utils.removeHeader()
+    },
+    onReady: function() {
+        AdminRequestService.init();
+    }
 });
 
 app.route({
@@ -87,8 +113,12 @@ app.route({
     load : "admin-meals.html",
     onCreate: function() { 
         sideBarToggleScript()
-        mealsDataTableDemo()
-        },
+        Utils.removeHeader()
+    },
+    onReady: function() {
+        AdminMealService.init();
+    }
+
 });
 
 app.route({
@@ -96,8 +126,11 @@ app.route({
     load : "admin-announcements.html",
     onCreate: function() { 
         sideBarToggleScript()
-        announcementsAdminDataTableDemo()
-        },
+        Utils.removeHeader()
+    },
+    onReady: function() {
+        AdminAnnouncementService.init();
+    }
 });
 
 app.route({
@@ -105,20 +138,20 @@ app.route({
     load : "admin-settings.html",
     onCreate: function() { 
         sideBarToggleScript()
-        loadSettings()
-        },
+        Utils.removeHeader()
+        ProfileSettingsService.init("admin");
+    },
 });
 
 // Student Dashboard Routes
-
 app.route({
     view : "student-dashboard",
     load : "student-dashboard.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentDashboardInit()
-        loadStudentMealsChart()
-        },
+        StudentDashboardService.init()
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -126,8 +159,9 @@ app.route({
     load : "student-room.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentRoomInit()
-        },
+        StudentRoomService.init()
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -135,8 +169,9 @@ app.route({
     load : "student-settings.html",
     onCreate: function() { 
         sideBarToggleScript()
-        loadStudentSettings()
-        },
+        ProfileSettingsService.init("student");
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -144,8 +179,9 @@ app.route({
     load : "student-meals.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentMealsInit()
-        },
+        StudentMealService.init()
+        Utils.removeHeader()
+    },
 });
 
 app.route({
@@ -153,8 +189,13 @@ app.route({
     load : "student-requests.html",
     onCreate: function() { 
         sideBarToggleScript()
-        studentRequestsInit()
-        },
+        Utils.removeHeader()
+    },
+    onReady: function(){
+        StudentRequestService.init()
+    }
 });
+
+UserService.generateMenuItems();
 
 app.run();

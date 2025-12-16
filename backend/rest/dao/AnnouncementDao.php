@@ -18,7 +18,8 @@ require_once __DIR__ . "/BaseDao.php";
                     a.title,
                     a.content,
                     CONCAT(u.first_name, ' ', u.last_name ) as name,
-                    a.created_at 
+                    a.created_at,
+                    thumbnail
                 FROM users u
                 JOIN announcements a on a.user_id  = u.id;
             ",[]);

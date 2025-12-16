@@ -8548,3 +8548,7 @@ section,
   border-bottom: 1px solid #d2d2d2 !important;
   margin-top: 5px !important;
 }
+
+body[data-view-type="dashboard"] #header {
+    display: none !important;
+}

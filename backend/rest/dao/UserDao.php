@@ -14,7 +14,13 @@ class UserDao extends BaseDao{
     }
 
     public function get_students_per_year(){
-        return $this->query("SELECT YEAR(created_at) as year, COUNT(*) as student_count FROM " . $this->table_name . " WHERE role = 'student' GROUP BY YEAR(created_at)", []);
+        return $this->query("SELECT YEAR(created_at) as year,
+         COUNT(*) as student_count FROM " . $this->table_name . " 
+         WHERE role = 'student' 
+         GROUP BY YEAR(created_at)
+         ORDER BY year DESC
+         LIMIT 7"
+        ,[]);
     }
 
 }

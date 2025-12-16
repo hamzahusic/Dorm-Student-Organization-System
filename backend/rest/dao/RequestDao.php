@@ -11,21 +11,8 @@ require_once __DIR__ . "/BaseDao.php";
             parent::__construct($this->table_name);
         }
 
-        public function get_student_requests($student_id){
-            return $this->query("SELECT 
-                r.id,
-                r.title,
-                r.description,
-                r.created_at,
-                r.status
-            FROM users u 
-            JOIN requests r ON u.id = r.user_id
-            WHERE u.id = :student_id;", ['student_id' => $student_id]);
-        }
-
-        public function get_all_request(){
-            return $this->query(
-                "SELECT DISTINCT
+        public function get_all_request($user_id = null){
+            $query = "SELECT DISTINCT
                     r.id,
                     r.title,
                     r.description,
@@ -34,12 +21,18 @@ require_once __DIR__ . "/BaseDao.php";
                     CONCAT(u.first_name, ' ', u.last_name ) as name,
                     u.room_id as room_number
                 FROM requests r
-                JOIN users u on r.user_id = u.id;"
-            ,[]);
+                JOIN users u on r.user_id = u.id";
+
+            if($user_id !== null){
+                $query = $query . " WHERE r.user_id = :user_id";
+                return $this->query($query,['user_id' => $user_id]);
+            }
+
+            return $this->query($query,[]);
         }
 
-        public function get_request_information($id){
-            return $this->query("SELECT DISTINCT
+        public function get_request_information($id, $user_id = null){
+            $query = "SELECT DISTINCT
                     r.id,
                     r.title,
                     r.description,
@@ -49,8 +42,14 @@ require_once __DIR__ . "/BaseDao.php";
                     u.room_id as room_number
                 FROM requests r
                 JOIN users u on r.user_id = u.id
-                WHERE r.id = :id;
-            ",['id' => $id]);
+                WHERE r.id = :id";
+
+            if($user_id !== null){
+                $query = $query . " AND r.user_id = :user_id";
+                return $this->query_unique($query,['id' => $id, 'user_id' => $user_id]);
+            }
+
+            return $this->query_unique($query,['id' => $id]);
         }
 
     }

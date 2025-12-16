@@ -11,17 +11,13 @@ class RequestService extends BaseService {
         parent::__construct($dao);
     }
 
-    public function get_student_requests($student_id){
-        return $this->dao->get_student_requests($student_id);
+    public function get_all_request($user_id = null){
+        return $this->dao->get_all_request($user_id);
     }
 
-    public function get_all_request(){
-        return $this->dao->get_all_request();
+    public function get_request_information($id, $user_id = null){
+        return $this->dao->get_request_information($id, $user_id);
     }
-
-    public function get_request_information($id){
-        return $this->dao->get_request_information($id);
-    }
-   
+    
 }
 ?>

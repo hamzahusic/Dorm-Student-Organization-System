@@ -12,7 +12,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#admin-settings">Settings</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="UserService.logout()">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        admin@gmail.com
+                        <span id="room-sidenav-user-email">User not found</span>
                     </div>
             </nav>
         </div>
@@ -73,96 +73,112 @@
                         </button>
                     </div>
 
-                    <!-- Add Room Modal -->
-                    <div class="modal fade" id="addRoomModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addRoomLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="addRoomLabel">Add New Room</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="addRoomNumber" class="form-label">Room Number</label>
-                                        <input type="number" class="form-control" id="addRoomNumber" placeholder="101">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="addCapacity" class="form-label">Capacity</label>
-                                        <input type="number" class="form-control" id="addCapacity" placeholder="2">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="addFloorNumber" class="form-label">Floor Number</label>
-                                        <input type="number" class="form-control" id="addFloorNumber" placeholder="1">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="addAssignedStudents" class="form-label">Assign Students (Optional)</label>
-                                        <select class="form-select" id="addAssignedStudents" multiple size="5">
-                                            <option value="1">Hamza Husić</option>
-                                            <option value="2">Amina Salkanović</option>
-                                            <option value="3">Faruk Hadžić</option>
-                                            <option value="4">Lejla Avdić</option>
-                                            <option value="5">Emir Kovačević</option>
-                                            <option value="6">Lana Miličević</option>
-                                            <option value="7">Adnan Begić</option>
-                                            <option value="8">Selma Omerović</option>
-                                            <option value="9">Haris Mehmedović</option>
-                                            <option value="10">Amila Bešlagić</option>
-                                        </select>
-                                        <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple students</small>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-success">Add Room</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                               
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
                             All Rooms
                         </div>
-                        <div class="card-body">
-                            <table id="roomsDataTable">
-                                <thead>
-                                    <tr>
-                                        <th>Room Number</th>
-                                        <th>Capacity</th>
-                                        <th>Floor Number</th>
-                                        <th>Assigned Students</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Room Number</th>
-                                        <th>Capacity</th>
-                                        <th>Floor Number</th>
-                                        <th>Assigned Students</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody id="roomsTableBody">
-                                </tbody>
-                            </table>
+                        <div class="card-body overflow-x-scroll mb-4">
+                            <table id="rooms-table" style="width: 100%;"></table>
                         </div>
                     </div>
                 </div>
             </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; UniDorms 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
+
+    <!-- MODALS -->
+
+    <!-- Add Room Modal -->
+    <div class="modal fade" id="addRoomModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addRoomLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addRoomLabel">Add New Room</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addRoomForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="addRoomNumber" class="form-label">Room Number</label>
+                            <input type="number" name="id" class="form-control" id="addRoomNumber" placeholder="101">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addCapacity" class="form-label">Capacity</label>
+                            <input type="number" name="capacity" class="form-control" id="addCapacity" placeholder="2">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addFloorNumber" class="form-label">Floor Number</label>
+                            <input type="number" name="floor" class="form-control" id="addFloorNumber" placeholder="1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add Room</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateRoomModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateRoomLabel">Update Room</h1>
+                    <button type="button" class="btn-close" onclick="AdminRoomService.closeModal()"></button>
+                </div>
+                <form id="updateRoomForm">
+                    <input name="original_id" id="originalRoomId" hidden>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="roomNumber" class="form-label">Room Number</label>
+                            <input type="number" class="form-control" name="id" id="roomNumber">
+                        </div>
+                        <div class="mb-3">
+                            <label for="roomCapacity" class="form-label">Capacity</label>
+                            <input type="number" name="capacity" class="form-control" id="roomCapacity">
+                        </div>
+                        <div class="mb-3">
+                            <label for="floorNumber" class="form-label">Floor Number</label>
+                            <input type="number" name="floor" class="form-control" id="floorNumber">
+                        </div>
+                        <div class="mb-3">
+                            <label for="assignedStudents" class="form-label">Assigned Students</label>
+                            <select class="form-select" name="students_ids" id="assignedRoomStudents" multiple size="8">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteRoomModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteRoomLabel">Delete Room</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="deleteRoomId" hidden>
+                    <p>Are you sure you want to delete <strong id="delete-room-head"></strong>?</p>
+                    <div id="delete-room-body">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="AdminRoomService.deleteRoom()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                
 </section>

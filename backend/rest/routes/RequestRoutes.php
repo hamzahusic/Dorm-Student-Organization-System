@@ -20,8 +20,13 @@
  */
 
 Flight::route('GET /requests', function(){
-    //when we do authorization I will update get_all method to get result based on role
-    Flight::json(Flight::requestService()->get_all());
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT, Roles::ADMIN]);
+    $user = Flight::get('user');
+    if($user->role == Roles::ADMIN){
+       Flight::json(Flight::requestService()->get_all_request());
+    }else{
+       Flight::json(Flight::requestService()->get_all_request($user->id));
+    }
 });
 
 /**
@@ -51,7 +56,13 @@ Flight::route('GET /requests', function(){
  */
 
 Flight::route('GET /request/info/@id', function($id){
-    Flight::json(Flight::requestService()->get_request_information($id));
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT, Roles::ADMIN]);
+    $user = Flight::get('user');
+    if($user->role == Roles::ADMIN){
+       Flight::json(Flight::requestService()->get_request_information($id));
+    }else{
+       Flight::json(Flight::requestService()->get_request_information($id, $user->id));
+    }
 });
 
 /**
@@ -67,13 +78,7 @@ Flight::route('GET /request/info/@id', function($id){
  *         description="New request information",
  *         required=true,
  *         @OA\JsonContent(
- *             required={"user_id", "title", "description"},
- *             @OA\Property(
- *                 property="user_id",
- *                 type="integer",
- *                 example=1,
- *                 description="User ID"
- *             ),
+ *             required={"title", "description"},
  *             @OA\Property(
  *                 property="title",
  *                 type="string",
@@ -85,12 +90,6 @@ Flight::route('GET /request/info/@id', function($id){
  *                 type="string",
  *                 example="Broken window in room 101",
  *                 description="Request description"
- *             ),
- *             @OA\Property(
- *                 property="status",
- *                 type="string",
- *                 example="pending",
- *                 description="Request status (defaults to 'pending')"
  *             )
  *         )
  *     ),
@@ -106,8 +105,10 @@ Flight::route('GET /request/info/@id', function($id){
  */
 
 Flight::route('POST /request', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::STUDENT);
+    $user = Flight::get('user');
     $data = Flight::request()->data->getData();
-    $result = Flight::requestService()->add($data);
+    $result = Flight::requestService()->add(array_merge($data, ['user_id' => $user->id]));
 
     Flight::json($result);
 });
@@ -130,12 +131,6 @@ Flight::route('POST /request', function(){
  *                 type="integer",
  *                 example=1,
  *                 description="Request ID"
- *             ),
- *             @OA\Property(
- *                 property="user_id",
- *                 type="integer",
- *                 example=1,
- *                 description="User ID"
  *             ),
  *             @OA\Property(
  *                 property="title",
@@ -169,10 +164,29 @@ Flight::route('POST /request', function(){
  */
 
 Flight::route('PUT /request', function(){
-    //when we do authorization I will edit update method to update based on role
-    //e.g only admin can change status of request
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT, Roles::ADMIN]);
+    $user = Flight::get('user');
     $data = Flight::request()->data->getData();
-    $result = Flight::requestService()->update($data,$data['id']);
+    $data['user_id'] = $user->id;
+    $result;
+
+    if(!$data['id']){
+        Flight::halt(400, "Please provide request id");
+    }
+
+    $user_request = Flight::requestService()->get_by_id($data['id']);
+
+    if($user->role == Roles::ADMIN){
+       $result = Flight::requestService()->update($data,$data['id']);
+    }else{
+       unset($data['status']);
+
+       if(!$user_request || $user_request['user_id'] != $user->id ){
+            Flight::halt(403, "Unauthorized access");
+       }
+
+       $result = Flight::requestService()->update($data,$data['id']);
+    }
 
     Flight::json($result);
 });
@@ -205,7 +219,22 @@ Flight::route('PUT /request', function(){
  */
 
 Flight::route('DELETE /request/@id', function($id){
-    $result = Flight::requestService()->delete($id);
+    Flight::auth_middleware()->authorizeRoles([Roles::STUDENT, Roles::ADMIN]);
+    $user = Flight::get('user');
+    $result;
+
+    $user_request = Flight::requestService()->get_by_id($id);
+
+    if($user->role == Roles::ADMIN){
+       $result = Flight::requestService()->delete($id);
+    }else{
+       if(!$user_request || $user_request['user_id'] != $user->id ){
+          Flight::halt(403, "Unauthorized access");
+       }
+
+       $result = Flight::requestService()->delete($id);
+    }
+
     Flight::json($result);
 });
 

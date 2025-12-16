@@ -2,7 +2,7 @@
 
 /**
  * @OA\Get(
- *     path="/announcements",
+ *     path="/public/announcements",
  *     tags={"announcements"},
  *     security={
  *         {"ApiKey": {}}
@@ -20,13 +20,13 @@
  */
 
 //I will protects all these routes to be only for admin when we implement authorization
-Flight::route('GET /announcements', function(){
+Flight::route('GET /public/announcements', function(){
     Flight::json(Flight::announcementService()->get_all_announcements());
 });
 
 /**
  * @OA\Get(
- *     path="/announcement/{id}",
+ *     path="/public/announcement/{id}",
  *     tags={"announcements"},
  *     security={
  *         {"ApiKey": {}}
@@ -51,7 +51,7 @@ Flight::route('GET /announcements', function(){
  */
 
 
-Flight::route('GET /announcement/@id', function($id){
+Flight::route('GET /public/announcement/@id', function($id){
     Flight::json(Flight::announcementService()->get_announcement($id));
 });
 
@@ -101,7 +101,10 @@ Flight::route('GET /announcement/@id', function($id){
  */
 
 Flight::route('POST /announcement', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
     $data = Flight::request()->data->getData();
+    $data['user_id']=Flight::get('user')->id;
     $result = Flight::announcementService()->add($data);
 
     Flight::json($result);
@@ -158,6 +161,8 @@ Flight::route('POST /announcement', function(){
  */
 
 Flight::route('PUT /announcement', function(){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
     $data = Flight::request()->data->getData();
     $result = Flight::announcementService()->update($data,$data['id']);
 
@@ -192,6 +197,8 @@ Flight::route('PUT /announcement', function(){
  */
 
 Flight::route('DELETE /announcement/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    
     $result = Flight::announcementService()->delete($id);
     Flight::json($result);
 });
