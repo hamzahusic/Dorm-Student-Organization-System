@@ -5,9 +5,6 @@ error_reporting(E_ALL);
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
-define('LOCALSERVER', 'http://localhost/Dorm-Student-Organization-System/backend');
-define('PRODSERVER', '-');
-
 if($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1'){
     define('BASE_URL', 'http://localhost/Dorm-Student-Organization-System/backend');
 } else {
