@@ -116,7 +116,19 @@ var UserService = {
             return window.location.replace("#home");
         }
 
-        const user = Utils.parseJwt(token).user;
+        let user = Utils.parseJwt(token);
+
+        if(!user || !user.user){
+            localStorage.removeItem("user_token");
+            return window.location.replace("#login");
+        }
+
+        if(user.exp * 1000 < Date.now()){
+            localStorage.removeItem("user_token");
+            return window.location.replace("#login");
+        }
+        
+        user = user.user;
 
         // HOME (everyone sees)
         navDesktop.innerHTML += `

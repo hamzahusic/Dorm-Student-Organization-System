@@ -1,6 +1,6 @@
 let Utils = {
 
-    datatable: function (table_id, columns, data, pageLength=15) {
+        datatable: function (table_id, columns, data, pageLength=15) {
             if ($.fn.dataTable.isDataTable("#" + table_id)) {
                 $("#" + table_id)
                 .DataTable()
@@ -22,7 +22,6 @@ let Utils = {
                 const decoded = atob(payload);
                 return JSON.parse(decoded);
             } catch (e) {
-                console.error("Invalid JWT token", e);
                 return null;
             }
         },
