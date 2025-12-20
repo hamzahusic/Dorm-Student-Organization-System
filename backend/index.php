@@ -30,7 +30,7 @@ $allowedOrigin = isset($_ENV['FRONTEND_URL']) && trim($_ENV['FRONTEND_URL']) != 
 Flight::route('OPTIONS /*', function() use ($allowedOrigin) {
     header("Access-Control-Allow-Origin: $allowedOrigin");
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-    header('Access-Control-Allow-Headers: Content-Type, Authorization, Authentication');
+    header('Access-Control-Allow-Headers: *');
     header('Access-Control-Allow-Credentials: true');
     Flight::halt(200);
 });
