@@ -21,6 +21,26 @@ Flight::register('announcementService', 'AnnouncementService');
 Flight::register('auth_service', "AuthService");
 Flight::register('auth_middleware', "AuthMiddleware");
 
+// CORS Configuration (Because I have deployed backend and frontend separately)
+$allowedOrigin = isset($_ENV['FRONTEND_URL']) && trim($_ENV['FRONTEND_URL']) != "" 
+    ? $_ENV['FRONTEND_URL'] 
+    : 'http://localhost/Dorm-Student-Organization-System/frontend';
+
+// Handle preflight OPTIONS requests
+Flight::route('OPTIONS /*', function() use ($allowedOrigin) {
+    header("Access-Control-Allow-Origin: $allowedOrigin");
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization, Authentication');
+    header('Access-Control-Allow-Credentials: true');
+    Flight::halt(200);
+});
+
+// Add CORS headers to all responses
+Flight::before('start', function() use ($allowedOrigin) {
+    header("Access-Control-Allow-Origin: $allowedOrigin");
+    header('Access-Control-Allow-Credentials: true');
+});
+
 Flight::before('start', function() {
     if(
         strpos(Flight::request()->url, '/auth/login') === 0 ||
