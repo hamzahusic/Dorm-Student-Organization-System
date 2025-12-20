@@ -26,17 +26,23 @@ $allowedOrigin = isset($_ENV['FRONTEND_URL']) && trim($_ENV['FRONTEND_URL']) != 
     ? $_ENV['FRONTEND_URL'] 
     : 'http://localhost/Dorm-Student-Organization-System/frontend';
 
-// Handle preflight OPTIONS requests
-Flight::route('OPTIONS /*', function() use ($allowedOrigin) {
+// Handle OPTIONS preflight
+Flight::route('OPTIONS *', function() use ($allowedOrigin) {
     header("Access-Control-Allow-Origin: $allowedOrigin");
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-    header('Access-Control-Allow-Headers: *');
+    header('Access-Control-Allow-Headers: content-type, Content-Type, Authorization, Authentication');
     header('Access-Control-Allow-Credentials: true');
-    Flight::halt(200);
+    Flight::halt(204);
 });
 
-// Add CORS headers to all responses
-Flight::before('start', function() use ($allowedOrigin) {
+// Add CORS to JSON responses
+Flight::before('json', function() use ($allowedOrigin) {
+    header("Access-Control-Allow-Origin: $allowedOrigin");
+    header('Access-Control-Allow-Credentials: true');
+});
+
+// Add CORS to error responses
+Flight::before('error', function() use ($allowedOrigin) {
     header("Access-Control-Allow-Origin: $allowedOrigin");
     header('Access-Control-Allow-Credentials: true');
 });
