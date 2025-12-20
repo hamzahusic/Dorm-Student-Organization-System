@@ -1,4 +1,25 @@
 <?php
+
+// CORS Configuration - MUST BE FIRST
+$allowedOrigin = isset($_ENV['FRONTEND_URL']) && trim($_ENV['FRONTEND_URL']) != "" 
+    ? $_ENV['FRONTEND_URL'] 
+    : 'http://localhost/Dorm-Student-Organization-System/frontend';
+
+// Set CORS headers for ALL requests
+header("Access-Control-Allow-Origin: " . $allowedOrigin);
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Max-Age: 86400");
+header("Access-Control-Allow-Headers: content-type, Content-Type, Authorization, Authentication, Accept, Origin");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+// Handle OPTIONS preflight - respond and exit immediately
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("Content-Length: 0");
+    header("Content-Type: text/plain");
+    http_response_code(204);
+    exit(0);
+}
+
 require 'vendor/autoload.php'; //run autoloader
 
 require_once __DIR__ . '/rest/services/MealService.php';
@@ -20,32 +41,6 @@ Flight::register('requestService', 'RequestService');
 Flight::register('announcementService', 'AnnouncementService');
 Flight::register('auth_service', "AuthService");
 Flight::register('auth_middleware', "AuthMiddleware");
-
-// CORS Configuration (Because I have deployed backend and frontend separately)
-$allowedOrigin = isset($_ENV['FRONTEND_URL']) && trim($_ENV['FRONTEND_URL']) != "" 
-    ? $_ENV['FRONTEND_URL'] 
-    : 'http://localhost/Dorm-Student-Organization-System/frontend';
-
-// Handle OPTIONS preflight
-Flight::route('OPTIONS *', function() use ($allowedOrigin) {
-    header("Access-Control-Allow-Origin: $allowedOrigin");
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-    header('Access-Control-Allow-Headers: content-type, Content-Type, Authorization, Authentication');
-    header('Access-Control-Allow-Credentials: true');
-    Flight::halt(204);
-});
-
-// Add CORS to JSON responses
-Flight::before('json', function() use ($allowedOrigin) {
-    header("Access-Control-Allow-Origin: $allowedOrigin");
-    header('Access-Control-Allow-Credentials: true');
-});
-
-// Add CORS to error responses
-Flight::before('error', function() use ($allowedOrigin) {
-    header("Access-Control-Allow-Origin: $allowedOrigin");
-    header('Access-Control-Allow-Credentials: true');
-});
 
 Flight::before('start', function() {
     if(
