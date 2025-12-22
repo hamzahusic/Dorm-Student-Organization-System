@@ -3,29 +3,31 @@
     class Config{
 
         public static function DB_NAME(){
-            return "unidorms";
+            return Config::get_env("DB_NAME","unidorms");
         }
 
         public static function DB_PORT(){
-            return "3306";
+            return Config::get_env("DB_PORT", 3306);
         }
 
         public static function DB_USER(){
-            return "root";
+            return Config::get_env("DB_USER", 'root');
         }
 
         public static function DB_PASSWORD(){
-            return "root";
+            return Config::get_env("DB_PASSWORD", 'root');
         }
 
         public static function DB_HOST(){
-            return "127.0.0.1";
+            return Config::get_env("DB_HOST", '127.0.0.1');
         }
         public static function JWT_SECRET() {
-            return 'secretjwt123$#1';
+            return Config::get_env("JWT_SECRET", 'secretjwt123$#1');
         }
 
+        public static function get_env($name, $default){
+            return isset($_ENV[$name]) && trim($_ENV[$name]) != "" ? $_ENV[$name] : $default;
+        }
 
     } 
-
 ?>

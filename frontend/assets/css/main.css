@@ -8552,3 +8552,11 @@ section,
 body[data-view-type="dashboard"] #header {
     display: none !important;
 }
+
+label.error{
+  color: red !important;
+}
+
+.dt-length label{
+  margin-left: 5px !important;
+}

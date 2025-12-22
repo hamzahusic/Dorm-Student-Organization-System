@@ -2,6 +2,30 @@ let StudentRequestService = {
 
     init: function () {
         $("#requestForm").validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 100
+                },
+                description: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 250
+                },
+            },
+            messages: {
+                title: {
+                    required: "Please enter a title",
+                    minlength: "Title must be at least 5 characters long",
+                    maxlength: "Title cannot exceed 100 characters"
+                },
+                description: {
+                    required: "Please enter a description",
+                    minlength: "Description must be at least 10 characters long",
+                    maxlength: "Description cannot exceed 250 characters"
+                },
+            },
             submitHandler: function (form) {
                 let data = Object.fromEntries(new FormData(form).entries());
                 StudentRequestService.createRequest(data, form);
@@ -9,6 +33,30 @@ let StudentRequestService = {
         });
 
         $("#studentUpdateRequestForm").validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 100
+                },
+                description: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 250
+                },
+            },
+            messages: {
+                title: {
+                    required: "Please enter a title",
+                    minlength: "Title must be at least 5 characters long",
+                    maxlength: "Title cannot exceed 100 characters"
+                },
+                description: {
+                    required: "Please enter a description",
+                    minlength: "Description must be at least 10 characters long",
+                    maxlength: "Description cannot exceed 250 characters"
+                },
+            },
             submitHandler: function (form) {
                 let data = Object.fromEntries(new FormData(form).entries());
                 StudentRequestService.updateRequest(data);

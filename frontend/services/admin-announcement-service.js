@@ -2,6 +2,41 @@ let AdminAnnouncementService = {
 
     init: function () {
         $("#createAnnouncementForm").validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 250
+                },
+                thumbnail: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 500,
+                    url: true
+                },
+                content: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 5000
+                }
+            },
+            messages: {
+                title: {
+                    required: "Please enter a title",
+                    minlength: "Title must be at least 5 characters long",
+                    maxlength: "Title cannot exceed 250 characters"
+                },
+                thumbnail: {
+                    required: "Please enter a thumbnail",
+                    minlength: "Thumbnail must be at least 5 characters long",
+                    maxlength: "Thumbnail cannot exceed 500 characters"
+                },
+                content: {
+                    required: "Please enter content",
+                    minlength: "Content must be at least 5 characters long",
+                    maxlength: "Content cannot exceed 5000 characters"
+                }
+            },
             submitHandler: function (form) {
                 let announcement = Object.fromEntries(new FormData(form).entries());
                 AdminAnnouncementService.createAnnouncement(announcement);
@@ -9,6 +44,41 @@ let AdminAnnouncementService = {
         });
 
         $("#updateAnnouncementForm").validate({
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 250
+                },
+                thumbnail: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 500,
+                    url: true
+                },
+                content: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 5000
+                }
+            },
+            messages: {
+                title: {
+                    required: "Please enter a title",
+                    minlength: "Title must be at least 5 characters long",
+                    maxlength: "Title cannot exceed 250 characters"
+                },
+                thumbnail: {
+                    required: "Please enter a thumbnail",
+                    minlength: "Thumbnail must be at least 5 characters long",
+                    maxlength: "Thumbnail cannot exceed 500 characters"
+                },
+                content: {
+                    required: "Please enter content",
+                    minlength: "Content must be at least 5 characters long",
+                    maxlength: "Content cannot exceed 5000 characters"
+                }
+            },
             submitHandler: function (form) {
                 let announcement = Object.fromEntries(new FormData(form).entries());
                 AdminAnnouncementService.updateAnnouncement(announcement);

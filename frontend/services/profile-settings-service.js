@@ -2,6 +2,68 @@ let ProfileSettingsService = {
 
     init: function (user_type) {
         $(`#${user_type}SettingsForm`).validate({
+            rules: {
+                first_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                faculty: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 100
+                },
+                year: {
+                    required: true,
+                    minlength: 1,
+                    maxlength: 1
+                },
+                phone: {
+                    required: true,
+                    minlength: 7,
+                    maxlength: 20
+                },
+            },
+            messages: {
+                first_name: {
+                    required: "Please enter a first name",
+                    minlength: "First name must be at least 2 characters long",
+                    maxlength: "First name cannot exceed 50 characters"
+                },
+                last_name: {
+                    required: "Please enter a last name",
+                    minlength: "Last name must be at least 2 characters long",
+                    maxlength: "Last name cannot exceed 50 characters"
+                },
+                email: {
+                    required: "Please enter an email address",
+                    email: "Please enter a valid email address"
+                },
+                faculty: {
+                    required: "Please select a faculty",
+                    minlength: "Faculty must be at least 2 characters long",
+                    maxlength: "Faculty cannot exceed 100 characters"
+                },
+                year: {
+                    required: "Please select a year",
+                    minlength: "Year must be at least 1 character long",
+                    maxlength: "Year cannot exceed 1 character"
+                },
+                phone: {
+                    required: "Please enter a phone number",
+                    minlength: "Phone number must be at least 7 digits long",
+                    maxlength: "Phone number cannot exceed 20 digits"
+                },
+            },
             submitHandler: function (form) {
                 let userInfo = Object.fromEntries(new FormData(form).entries());
                 userInfo.id = Utils.parseJwt(localStorage.getItem('user_token')).user.id;

@@ -11,6 +11,19 @@ let StudentRoomService = {
     getRoomInfo: function (id, user_id) {
         $.blockUI({ message: '<h3>Loading...</h3>' });
         $(`#noRoomAssignedMain`).hide();
+
+        // Clear previous data
+        $("#studentRoomNumber").text("0");
+        $(`#studentRoomFloor`).text("0");
+        $(`#studentRoomCapacity`).text("0");
+        $(`#studentCurrentOccupancy`).text("0 / 0");
+        $(`#studentBedsAvailable`).text("0 Bed");
+        $("#roommatesList").html(
+            `<div class="alert alert-warning" role="alert">
+                <i class="fas fa-user-slash"></i> You currently have no roommates assigned.
+            </div>`
+        )
+
         RestClient.get('room/info/' + id, function (data) {
             $(`#studentRoomNumber`).text(data.id);
             $(`#studentRoomFloor`).text(data.floor);

@@ -2,6 +2,42 @@ let AdminMealService = {
 
     init: function () {
         $("#addMealForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                type: {
+                    required: true
+                },
+                description: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 250
+                },
+                date: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: "Please enter a meal name",
+                    minlength: "Meal name must be at least 2 characters long",
+                    maxlength: "Meal name cannot exceed 50 characters"
+                },
+                type: {
+                    required: "Please enter a meal type"
+                },
+                description: {
+                    required: "Please enter a meal description",
+                    minlength: "Meal description must be at least 2 characters long",
+                    maxlength: "Meal description cannot exceed 250 characters"
+                },
+                date: {
+                    required: "Please enter the date",
+                },
+            },
             submitHandler: function (form) {
                 let meal = Object.fromEntries(new FormData(form).entries());
                 AdminMealService.addMeal(meal);
@@ -9,6 +45,42 @@ let AdminMealService = {
         });
 
         $("#updateMealForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                type: {
+                    required: true
+                },
+                description: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 250
+                },
+                date: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: "Please enter a meal name",
+                    minlength: "Meal name must be at least 2 characters long",
+                    maxlength: "Meal name cannot exceed 50 characters"
+                },
+                type: {
+                    required: "Please enter a meal type"
+                },
+                description: {
+                    required: "Please enter a meal description",
+                    minlength: "Meal description must be at least 2 characters long",
+                    maxlength: "Meal description cannot exceed 250 characters"
+                },
+                date: {
+                    required: "Please enter the date",
+                },
+            },
             submitHandler: function (form) {
                 let meal = Object.fromEntries(new FormData(form).entries());
                 AdminMealService.updateMeal(meal);

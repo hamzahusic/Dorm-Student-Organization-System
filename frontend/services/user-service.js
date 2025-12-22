@@ -5,25 +5,88 @@ var UserService = {
             window.location.replace("#home");
         }
         $("#authLoginForm").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 8
+                }
+            },
+            messages: {
+                email: "Please enter a valid email address",
+                password: "Minimum 8 characters"
+            },
             submitHandler: function (form) {
-            var entity = Object.fromEntries(new FormData(form).entries());
-            UserService.login(entity);
+                var entity = Object.fromEntries(new FormData(form).entries());
+                UserService.login(entity);
+            },
+        });
+
+        $("#authRegisterForm").validate({
+            rules: {
+                first_name: {
+                    required: true,
+                    minlength: 2
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 8
+                }
+            },
+            messages: {
+                first_name: "Please enter your first name (Minimum 2 characters)",
+                last_name: "Please enter your last name (Minimum 2 characters)",
+                email: "Please enter a valid email address",
+                password: "Minimum 8 characters"
+            },
+            submitHandler: function (form) {
+                var entity = Object.fromEntries(new FormData(form).entries());
+                UserService.register(entity);
             },
         });
     },
+
     login: function (entity) {
         $.ajax({
-            url: Constants.PROJECT_BASE_URL + "auth/login",
+            url: Constants.PROJECT_BASE_URL() + "auth/login",
             type: "POST",
             data: JSON.stringify(entity),
             contentType: "application/json",
             dataType: "json",
             success: function (result) {
-            localStorage.setItem("user_token", result.data.token);
-            window.location.replace("#home");
+                localStorage.setItem("user_token", result.data.token);
+                window.location.replace("#home");
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             toastr.error(XMLHttpRequest?.responseText ?  XMLHttpRequest.responseText : 'Error');
+            },
+        });
+    },
+
+    register: function (entity) {
+        $.ajax({
+            url: Constants.PROJECT_BASE_URL() + "auth/register",
+            type: "POST",
+            data: JSON.stringify(entity),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                toastr.success("Registration successful. Please login.");
+                window.location.replace("#login");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest?.responseText ?  XMLHttpRequest.responseText : 'Error');
             },
         });
     },
@@ -53,7 +116,19 @@ var UserService = {
             return window.location.replace("#home");
         }
 
-        const user = Utils.parseJwt(token).user;
+        let user = Utils.parseJwt(token);
+
+        if(!user || !user.user){
+            localStorage.removeItem("user_token");
+            return window.location.replace("#login");
+        }
+
+        if(user.exp * 1000 < Date.now()){
+            localStorage.removeItem("user_token");
+            return window.location.replace("#login");
+        }
+        
+        user = user.user;
 
         // HOME (everyone sees)
         navDesktop.innerHTML += `

@@ -11,8 +11,14 @@ let StudentDashboardService = {
 
     getRoomInformation: function (id) {
         $(`#noRoomAssignedSecond`).hide();
+
+        // Clear previous data
+        $("#studentRoomNumberDashboard").text("0");
+        $("#studentFloor").text("0");
+        $("#studentCapacity").text("0");
+
         RestClient.get("room/info/" + id, function (data) {
-            $("#studentRoomNumber").text(data.id);
+            $("#studentRoomNumberDashboard").text(data.id);
             $("#studentFloor").text(data.floor);
             $("#studentCapacity").text(`${data.students.length}/${data.capacity}`);
         }, function (){
